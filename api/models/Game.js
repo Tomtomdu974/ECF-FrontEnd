@@ -1,0 +1,24 @@
+import { DataTypes } from "sequelize";
+import db from '../config/db.js';
+
+const Game = db.define('Game', {
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    },
+    release_year: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    author: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    description: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
+})
+
+export default Game;
