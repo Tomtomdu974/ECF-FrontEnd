@@ -97,8 +97,7 @@ const Catalogue = () => {
                             <Link to={`/manga/${manga.id}`}><h3>{manga.title}</h3></Link>
                             <img src={`${API_URL}/${manga.image}`} alt={manga.title} />
                             <p>{manga.description}</p>
-                            <p>{manga.releaseDate}</p>
-                            <p>{manga.rating}</p>
+                            <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>
                             <button onClick={() => removeManga(manga.id)}>Supprimer</button>
                         </div>
                     ))}
@@ -113,8 +112,7 @@ const Catalogue = () => {
                             <Link to={`/anime/${anime.id}`}><h3>{anime.title}</h3></Link>
                             <img src={`${API_URL}/${anime.image}`} alt={anime.title} />
                             <p>{anime.description}</p>
-                            <p>{anime.releaseDate}</p>
-                            <p>{anime.rating}</p>
+                            <Link to={`/edit/anime/${anime.id}`}>Modifier</Link>
                             <button onClick={() => removeAnime(anime.id)}>Supprimer</button>
                         </div>
                     ))}
@@ -129,8 +127,7 @@ const Catalogue = () => {
                             <Link to={`/game/${game.id}`}><h3>{game.title}</h3></Link>
                             <img src={`${API_URL}/${game.image}`} alt={game.title} />
                             <p>{game.description}</p>
-                            <p>{game.releaseDate}</p>
-                            <p>{game.rating}</p>
+                            <Link to={`/edit/game/${game.id}`}>Modifier</Link>
                             <button onClick={() => removeGame(game.id)}>Supprimer</button>
                         </div>
                     ))}

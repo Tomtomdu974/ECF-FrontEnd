@@ -34,7 +34,7 @@ class GameController {
         try {
             const { id } = req.params;
             const game = await Game.findByPk(id, {
-                include: Category
+                include: [Category, Gender]
             });
 
             if (!game) {

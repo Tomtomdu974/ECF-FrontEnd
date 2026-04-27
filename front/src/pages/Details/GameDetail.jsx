@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useParams, Link } from "react-router";
 import { useEffect, useState } from "react";
 import { fetchGameById, deleteGame } from "../../api/game";
 const API_URL = import.meta.env.VITE_API_URL;
@@ -20,11 +20,13 @@ const GameDetail = () => {
 
     return (
         <div>
+            <Link to={'/'}>Retour a l'accueil</Link>
             <h1>{game.title}</h1>
             <img src={`${API_URL}/${game.image}`} alt={game.title} />
             <p>{game.description}</p>
-            <p>{game.releaseDate}</p>
-            <p>{game.rating}</p>
+            <p>Date de sortie : {game.release_year}</p>
+            <p>Genre : {game.Gender?.name}</p>
+            <Link to={`/edit/game/${game.id}`}>Modifier</Link>
             <button onClick={() => removeGame(game.id)}>Supprimer</button>
         </div>
     )

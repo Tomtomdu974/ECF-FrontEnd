@@ -35,7 +35,7 @@ class MangaController {
         try {
             const { id } = req.params;
             const manga = await Manga.findByPk(id, {
-                include: Category
+                include: [ Category, Gender ]
             })
 
             if (!manga) {

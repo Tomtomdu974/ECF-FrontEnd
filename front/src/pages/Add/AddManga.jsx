@@ -40,22 +40,27 @@ const AddManga = () => {
 
                 <label>Auteur
                     <input type="text" name="author" />
+                    {error.author && <span>{error.author}</span>}
                 </label>
 
                 <label>Description
-                    <input type="text" name="description" />
+                    <input type="text" name="description" />.
+                    {error.description && <span>{error.description}</span>}
                 </label>
 
                 <label>Date de sortie
                     <input type="date" name="release_year" />
+                    {error.release_year && <span>{error.release_year}</span>}
                 </label>
 
                 <label>Nombre de volumes
                     <input type="number" name="nbVolumes" />
+                    {error.nbVolumes && <span>{error.nbVolumes}</span>}
                 </label>
 
                 <label>Image
                     <input type="file" name="image" />
+                    {error.image && <span>{error.image}</span>}
                 </label>
 
                 <label>Catégorie

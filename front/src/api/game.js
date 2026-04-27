@@ -31,13 +31,10 @@ export const fetchGameById = async (id) => {
     return data;
 }
 
-export const updateGame = async (game) => {
-    const response = await fetch(`${ENDPOINT}/${game.id}`, {
+export const updateGame = async (id, formData) => {
+    const response = await fetch(`${ENDPOINT}/${id}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(game)
+        body: formData
     })
     const data = await response.json();
 

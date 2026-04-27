@@ -35,7 +35,7 @@ class AnimeController {
         try {
             const { id } = req.params;
             const anime = await Anime.findByPk(id, {
-                include: Category
+                include: [Category, Gender]
             })
 
             if (!anime) {

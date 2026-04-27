@@ -45,13 +45,10 @@ export const createAnime = async (anime) => {
     return data;
 }
 
-export const updateAnime = async (anime) => {
-    const response = await fetch(`${ENDPOINT}/${anime.id}`, {
+export const updateAnime = async (id, formData) => {
+    const response = await fetch(`${ENDPOINT}/${id}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(anime)
+        body: formData
     })
     const data = await response.json();
 

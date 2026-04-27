@@ -8,6 +8,9 @@ import Catalogue from './pages/Catalogue'
 import AddManga from './pages/Add/AddManga'
 import AddAnime from './pages/Add/AddAnime'
 import AddGame from './pages/Add/AddGame'
+import EditManga from './pages/Edit/EditManga'
+import EditGame from './pages/Edit/EditGame'
+import EditAnime from './pages/Edit/EditAnime'
 
 function App() {
 
@@ -19,9 +22,12 @@ function App() {
         <Route path='/anime/:id' element={<AnimeDetail />} />
         <Route path='/game/:id' element={<GameDetail />} />
         <Route path='/catalogue' element={<Catalogue />} />
-        <Route path='/manga/add' element={<AddManga />} />
+        <Route path='/add/manga' element={<AddManga />} />
         <Route path='/add/anime' element={<AddAnime />} />
         <Route path='/add/game' element={<AddGame />} />
+        <Route path='/edit/manga/:id' element={<EditManga />} />
+        <Route path='/edit/game/:id' element={<EditGame />} />
+        <Route path='/edit/anime/:id' element={<EditAnime />} />
       </Routes>
     </BrowserRouter>
   )

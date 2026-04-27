@@ -45,13 +45,10 @@ export const createManga = async (manga) => {
     return data;
 }
 
-export const updateManga = async (manga) => {
-    const response = await fetch(`${ENDPOINT}/${manga.id}`, {
+export const updateManga = async (id, formData) => {
+    const response = await fetch(`${ENDPOINT}/${id}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(manga)
+        body: formData
     })
     const data = await response.json();
 
