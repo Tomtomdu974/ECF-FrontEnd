@@ -90,6 +90,7 @@ const Home = () => {
                 {animes && animes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((anime) => (
                     <div key={anime.id}>
                         <Link to={`/anime/${anime.id}`}><h3>{anime.title}</h3></Link>
+                        <img src={`${API_URL}/${anime.image}`} alt={anime.title} />
                         <p>{anime.description}</p>
                         <p>{anime.releaseDate}</p>
                         <p>{anime.rating}</p>

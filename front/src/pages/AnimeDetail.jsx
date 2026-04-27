@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { fetchAnimeById, deleteAnime } from "../api/anime";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AnimeDetail = () => {
     const { id } = useParams();
@@ -20,7 +21,7 @@ const AnimeDetail = () => {
     return (
         <div>
             <h1>{anime.title}</h1>
-            <img src={anime.poster?.data[0]?.images?.jpg?.image_url} alt={anime.title} />
+            <img src={`${API_URL}/${anime.image}`} alt={anime.title} />
             <p>{anime.description}</p>
             <p>{anime.releaseDate}</p>
             <p>{anime.rating}</p>

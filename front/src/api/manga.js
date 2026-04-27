@@ -20,9 +20,6 @@ export const fetchMangas = async (search = '', selectedGenre = '', category = ''
         const response = await fetch(endpoint);
         const data = await response.json();
 
-        const poster = await fetchPoster(data.title);
-        data.poster = poster;
-
         return data;
     } catch (error) {
         console.error(error);
@@ -32,16 +29,6 @@ export const fetchMangas = async (search = '', selectedGenre = '', category = ''
 
 export const fetchMangaById = async (id) => {
     const response = await fetch(`${ENDPOINT}/${id}`);
-    const data = await response.json();
-
-    const poster = await fetchPoster(data.title);
-    data.poster = poster;
-
-    return data;
-}
-
-const fetchPoster = async (title) => {
-    const response = await fetch(`https://api.jikan.moe/v4/manga?q=${title}&limit=1`);
     const data = await response.json();
 
     return data;

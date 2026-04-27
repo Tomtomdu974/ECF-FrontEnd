@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { fetchGameById, deleteGame } from "../api/game";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const GameDetail = () => {
     const { id } = useParams();
@@ -20,7 +21,7 @@ const GameDetail = () => {
     return (
         <div>
             <h1>{game.title}</h1>
-            <img src={game.poster?.[0]?.background_image} alt={game.title} />
+            <img src={`${API_URL}/${game.image}`} alt={game.title} />
             <p>{game.description}</p>
             <p>{game.releaseDate}</p>
             <p>{game.rating}</p>
@@ -30,7 +31,3 @@ const GameDetail = () => {
 }
 
 export default GameDetail
-
-// API KEY : 51039b60657e40c5b624d25d048d7d3b
-
-// 05-62-26-87-80

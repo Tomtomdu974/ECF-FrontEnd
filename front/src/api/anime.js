@@ -1,6 +1,5 @@
 const API_URL = import.meta.env.VITE_API_URL;
 const ENDPOINT = `${API_URL}/animes`;
-// const OMDB_KEY = import.meta.env.VITE_OMDB_KEY;
 
 export const fetchAnimes = async (search = '', selectedGenre = '', category = '') => {
     let endpoint = `${ENDPOINT}?page=1`;
@@ -30,23 +29,6 @@ export const fetchAnimes = async (search = '', selectedGenre = '', category = ''
 
 export const fetchAnimeById = async (id) => {
     const response = await fetch(`${ENDPOINT}/${id}`);
-    const data = await response.json();
-    
-    const poster = await fetchPoster(data.title);
-    data.poster = poster;
-
-    return data;
-}
-
-// const fetchPoster = async (title) => {
-//     const response = await fetch(`http://www.omdbapi.com/?apikey=${OMDB_KEY}&t=${title}`)
-//     const data = await response.json();
-
-//     return data;
-// }
-
-const fetchPoster = async (title) => {
-    const response = await fetch(`https://api.jikan.moe/v4/anime?q=${title}&limit=1`);
     const data = await response.json();
 
     return data;
