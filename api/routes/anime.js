@@ -1,11 +1,12 @@
 import express from 'express';
 import AnimeController from '../controllers/anime.controller.js';
+import upload from '../middlewares/multer.js';
 
 const router = express.Router();
 
 router.get('/', AnimeController.getAll);
 router.get('/:id', AnimeController.getById);
-router.post('/', AnimeController.create);
+router.post('/', upload.single('image'), AnimeController.create);
 router.put('/:id', AnimeController.update);
 router.delete('/:id', AnimeController.delete);
 

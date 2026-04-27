@@ -48,7 +48,7 @@ const Home = () => {
         });
     }, []);
 
-    return (
+    return mangas && (
         <div>
             <h1>Accueil</h1>
             <p>Rechercher</p>
@@ -74,9 +74,8 @@ const Home = () => {
                 <h2>Manga</h2>
                 {mangas && mangas.map((manga) => (
                     <div key={manga.id}>
-                        <Link to={`/manga/${manga.id}`}>
-                            <h3>{manga.title}</h3>
-                        </Link>
+                        <Link to={`/manga/${manga.id}`}><h3>{manga.title}</h3></Link>
+                        <img src={manga.poster?.data[0]?.images?.jpg?.image_url} alt={manga.title} />
                         <p>{manga.description}</p>
                         <p>{manga.releaseDate}</p>
                         <p>{manga.rating}</p>
@@ -89,9 +88,7 @@ const Home = () => {
                 <h2>Animes</h2>
                 {animes && animes.map((anime) => (
                     <div key={anime.id}>
-                        <Link to={`/anime/${anime.id}`}>
-                            <h3>{anime.title}</h3>
-                        </Link>
+                        <Link to={`/anime/${anime.id}`}><h3>{anime.title}</h3></Link>
                         <p>{anime.description}</p>
                         <p>{anime.releaseDate}</p>
                         <p>{anime.rating}</p>
@@ -104,9 +101,8 @@ const Home = () => {
                 <h2>Jeux vidéos</h2>
                 {games.map((game) => (
                     <div key={game.id}>
-                        <Link to={`/game/${game.id}`}>
-                            <h3>{game.title}</h3>
-                        </Link>
+                        <Link to={`/game/${game.id}`}><h3>{game.title}</h3></Link>
+                        <img src={game.poster?.[0]?.background_image} alt={game.title} />
                         <p>{game.description}</p>
                         <p>{game.releaseDate}</p>
                         <p>{game.rating}</p>

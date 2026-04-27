@@ -1,5 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
 const ENDPOINT = `${API_URL}/games`;
+const RAWG_KEY = import.meta.env.VITE_RAWG_KEY;
 
 export const fecthGames = async (search = '', selectedGenre = '', category = '') => {
     let endpoint = ENDPOINT + '?page=1';
@@ -19,11 +20,24 @@ export const fecthGames = async (search = '', selectedGenre = '', category = '')
     const response = await fetch(endpoint);
     const data = await response.json();
 
+    const additionnalsData = await fetchPoster(data.title);
+    data.poster = additionnalsData.results;
+
     return data;
 }
 
 export const fetchGameById = async (id) => {
     const response = await fetch(`${ENDPOINT}/${id}`);
+    const data = await response.json();
+
+    const additionnalsData = await fetchPoster(data.title);
+    data.poster = additionnalsData.results;
+
+    return data;
+}
+
+const fetchPoster = async (title) => {
+    const response = await fetch(`https://api.rawg.io/api/games?key=${RAWG_KEY}&search=${title}&page_size=1`)
     const data = await response.json();
 
     return data;

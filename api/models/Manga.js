@@ -22,6 +22,10 @@ const Manga = db.define('Manga', {
     nbVolumes: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 })
 

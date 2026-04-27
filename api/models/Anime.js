@@ -22,6 +22,10 @@ const Anime = db.define('Anime', {
     nbEpisodes: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 })
 
