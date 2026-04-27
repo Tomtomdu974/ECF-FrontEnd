@@ -11,10 +11,6 @@ class UserController {
                 include: [Game, Manga, Anime]
             });
 
-            if (users.length === 0) {
-                return res.status(404).json({ message: "Aucun utilisateur trouvé" });
-            }
-
             res.json(users);
         } catch (error) {
             console.error(error);

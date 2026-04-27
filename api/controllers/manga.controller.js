@@ -1,11 +1,12 @@
-import { Manga, Category } from "../models/index.js";
+import { Manga, Category, Gender } from "../models/index.js";
 import { Op } from 'sequelize';
 
 class MangaController {
     getAll = async (req, res) => {
         try {
-            const { category, search } = req.query;
+            const { category, search, selectedGenre } = req.query;
             let where = {};
+
             if (category) {
                 where.CategoryId = category
             }
@@ -14,14 +15,14 @@ class MangaController {
                 where.title = { [Op.like]: `%${search}%` }
             }
 
+            if (selectedGenre) {
+                where.GenderId = selectedGenre
+            }
+
             const mangas = await Manga.findAll({
                 where,
-                include: Category
+                include: [Category, Gender]
             });
-
-            if (mangas.length === 0) {
-                return res.status(404).json({ message: "Aucun manga trouvé" });
-            }
 
             res.json(mangas);
         } catch (error) {
@@ -34,7 +35,7 @@ class MangaController {
         try {
             const { id } = req.params;
             const manga = await Manga.findByPk(id, {
-                include: Category
+                include: [ Category, Gender ]
             })
 
             if (!manga) {
@@ -58,7 +59,11 @@ class MangaController {
                 return res.status(400).json({ message: "Le manga existe deja" });
             }
 
-            const manga = await Manga.create(req.body);
+            if (!req.file) {
+                return res.status(400).json({ message: "Une image est obligatoire" });
+            }
+
+            const manga = await Manga.create({ ...req.body, image: req.file.path });
 
             res.json(manga);
         } catch (error) {
@@ -77,7 +82,7 @@ class MangaController {
                 return res.status(404).json({ message: "Manga non trouvé" });
             }
 
-            await manga.update(req.body);
+            await manga.update({ ...req.body, ...(req.file && { image: req.file.path }) });
 
             res.json(manga);
         } catch (error) {

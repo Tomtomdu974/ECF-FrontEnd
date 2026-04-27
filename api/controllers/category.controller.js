@@ -5,10 +5,6 @@ class CategoryController {
         try {
             const categories = await Category.findAll();
 
-            if (categories.length === 0) {
-                return res.status(404).json({ message: "Aucune categorie trouvée" });
-            }
-
             res.json(categories);
         } catch (error) {
             console.error(error);

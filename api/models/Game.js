@@ -8,7 +8,7 @@ const Game = db.define('Game', {
         unique: true
     },
     release_year: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DATEONLY,
         allowNull: false
     },
     author: {
@@ -16,6 +16,10 @@ const Game = db.define('Game', {
         allowNull: false
     },
     description: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
+    image: {
         type: DataTypes.STRING,
         allowNull: false
     }

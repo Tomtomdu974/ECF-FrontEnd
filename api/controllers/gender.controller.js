@@ -5,10 +5,6 @@ class GenderController {
         try {
             const genders = await Gender.findAll();
 
-            if (genders.length === 0) {
-                return res.status(404).json({ message: "Aucun genre trouvée" });
-            }
-
             res.json(genders);
         } catch (error) {
             console.error(error);

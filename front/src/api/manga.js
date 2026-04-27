@@ -5,7 +5,7 @@ export const fetchMangas = async (search = '', selectedGenre = '', category = ''
     let endpoint = `${ENDPOINT}?page=1`;
 
     if (selectedGenre.length > 0) {
-        endpoint += `&genre=${selectedGenre.join(',')}`;
+        endpoint += `&selectedGenre=${selectedGenre}`;
     }
 
     if (search.length > 0) {
@@ -37,7 +37,7 @@ export const fetchMangaById = async (id) => {
 export const createManga = async (manga) => {
     const response = await fetch(`${ENDPOINT}`, {
         method: "POST",
-        body: JSON.stringify(manga)
+        body: manga
     })
 
     const data = await response.json();
@@ -45,13 +45,10 @@ export const createManga = async (manga) => {
     return data;
 }
 
-export const updateManga = async (manga) => {
-    const response = await fetch(`${ENDPOINT}/${manga.id}`, {
+export const updateManga = async (id, formData) => {
+    const response = await fetch(`${ENDPOINT}/${id}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(manga)
+        body: formData
     })
     const data = await response.json();
 

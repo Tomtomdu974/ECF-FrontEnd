@@ -1,10 +1,10 @@
-import { Anime, Category } from "../models/index.js";
+import { Anime, Category, Gender } from "../models/index.js";
 import { Op } from 'sequelize';
 
 class AnimeController {
     getAll = async (req, res) => {
         try {
-            const { category, search } = req.query;
+            const { category, search, selectedGenre } = req.query;
             let where = {};
             if (category) {
                 where.CategoryId = category
@@ -14,14 +14,15 @@ class AnimeController {
                 where.title = { [Op.like]: `%${search}%` }
             }
 
+            if (selectedGenre) {
+                where.GenderId = selectedGenre
+            }
+
             const animes = await Anime.findAll({
                 where,
-                include: Category
+                include: [Category, Gender]
             });
 
-            if (animes.length === 0) {
-                return res.status(404).json({ message: "Aucun anime trouvé" });
-            }
 
             res.json(animes);
         } catch (error) {
@@ -34,7 +35,7 @@ class AnimeController {
         try {
             const { id } = req.params;
             const anime = await Anime.findByPk(id, {
-                include: Category
+                include: [Category, Gender]
             })
 
             if (!anime) {
@@ -58,7 +59,11 @@ class AnimeController {
                 return res.status(400).json({ message: "Anime déjà existant" });
             }
 
-            const anime = await Anime.create(req.body);
+            if (!req.file) {
+                return res.status(400).json({ message: "Une image est obligatoire" });
+            }
+
+            const anime = await Anime.create({ ...req.body, image: req.file.path });
 
             res.json(anime);
         } catch (error) {
@@ -76,7 +81,7 @@ class AnimeController {
                 return res.status(404).json({ message: "Anime non trouvé" });
             }
 
-            await anime.update(req.body);
+            await anime.update({ ...req.body, ...(req.file && { image: req.file.path }) });
 
             res.json(anime);
         } catch (error) {

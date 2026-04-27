@@ -5,7 +5,7 @@ export const fetchAnimes = async (search = '', selectedGenre = '', category = ''
     let endpoint = `${ENDPOINT}?page=1`;
 
     if (selectedGenre.length > 0) {
-        endpoint += `&genre=${selectedGenre.join(',')}`;
+        endpoint += `&selectedGenre=${selectedGenre}`;
     }
 
     if (search.length > 0) {
@@ -37,7 +37,7 @@ export const fetchAnimeById = async (id) => {
 export const createAnime = async (anime) => {
     const response = await fetch(`${ENDPOINT}`, {
         method: "POST",
-        body: JSON.stringify(anime)
+        body: anime
     })
 
     const data = await response.json();
@@ -45,13 +45,10 @@ export const createAnime = async (anime) => {
     return data;
 }
 
-export const updateAnime = async (anime) => {
-    const response = await fetch(`${ENDPOINT}/${anime.id}`, {
+export const updateAnime = async (id, formData) => {
+    const response = await fetch(`${ENDPOINT}/${id}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(anime)
+        body: formData
     })
     const data = await response.json();
 

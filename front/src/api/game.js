@@ -5,7 +5,7 @@ export const fecthGames = async (search = '', selectedGenre = '', category = '')
     let endpoint = ENDPOINT + '?page=1';
 
     if (selectedGenre.length > 0) {
-        endpoint += `&genre=${selectedGenre}`;
+        endpoint += `&selectedGenre=${selectedGenre}`;
     }
 
     if (search.length > 0) {
@@ -19,6 +19,7 @@ export const fecthGames = async (search = '', selectedGenre = '', category = '')
     const response = await fetch(endpoint);
     const data = await response.json();
 
+
     return data;
 }
 
@@ -26,16 +27,14 @@ export const fetchGameById = async (id) => {
     const response = await fetch(`${ENDPOINT}/${id}`);
     const data = await response.json();
 
+
     return data;
 }
 
-export const updateGame = async (game) => {
-    const response = await fetch(`${ENDPOINT}/${game.id}`, {
+export const updateGame = async (id, formData) => {
+    const response = await fetch(`${ENDPOINT}/${id}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(game)
+        body: formData
     })
     const data = await response.json();
 

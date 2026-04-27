@@ -33,7 +33,7 @@ Gender.hasMany(Manga);
 Gender.hasMany(Anime);
 
 
-db.sync();
+db.sync({ alter: true });
 
 export {
     Manga,

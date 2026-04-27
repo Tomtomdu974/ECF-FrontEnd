@@ -1,10 +1,10 @@
-import { Game, Category } from "../models/index.js";
+import { Game, Category, Gender } from "../models/index.js";
 import { Op } from 'sequelize';
 
 class GameController {
     getAll = async (req, res) => {
         try {
-            const { category, search } = req.query;
+            const { category, search, selectedGenre } = req.query;
             let where = {};
             if (category) {
                 where.CategoryId = category
@@ -14,14 +14,14 @@ class GameController {
                 where.title = { [Op.like]: `%${search}%` }
             }
 
+            if (selectedGenre) {
+                where.GenderId = selectedGenre
+            }
+
             const games = await Game.findAll({
                 where,
-                include: Category
+                include: [Category, Gender]
             });
-
-            if (games.length === 0) {
-                return res.status(404).json({ message: "Aucun jeu trouvé" });
-            }
 
             res.json(games);
         } catch (error) {
@@ -34,7 +34,7 @@ class GameController {
         try {
             const { id } = req.params;
             const game = await Game.findByPk(id, {
-                include: Category
+                include: [Category, Gender]
             });
 
             if (!game) {
@@ -59,7 +59,11 @@ class GameController {
                 return res.status(400).json({ message: "Le jeu existe deja" });
             }
 
-            const game = await Game.create(req.body);
+            if (!req.file) {
+                return res.status(400).json({ message: "Une image est obligatoire" });
+            }
+
+            const game = await Game.create({ ...req.body, image: req.file.path });
 
             res.json(game);
         } catch (error) {
@@ -76,7 +80,7 @@ class GameController {
                 return res.status(404).json({ message: "Jeu non trouvé" });
             }
 
-            await game.update(req.body);
+            await game.update({ ...req.body, ...(req.file && { image: req.file.path }) });
 
             res.json(game);
         } catch (error) {
