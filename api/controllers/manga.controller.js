@@ -58,7 +58,11 @@ class MangaController {
                 return res.status(400).json({ message: "Le manga existe deja" });
             }
 
-            const manga = await Manga.create(req.body);
+            if (!req.file) {
+                return res.status(400).json({ message: "Une image est obligatoire" });
+            }
+
+            const manga = await Manga.create({ ...req.body, image: req.file.path });
 
             res.json(manga);
         } catch (error) {
@@ -77,7 +81,7 @@ class MangaController {
                 return res.status(404).json({ message: "Manga non trouvé" });
             }
 
-            await manga.update(req.body);
+            await manga.update({ ...req.body, ...(req.file && { image: req.file.path }) });
 
             res.json(manga);
         } catch (error) {

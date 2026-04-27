@@ -59,7 +59,11 @@ class GameController {
                 return res.status(400).json({ message: "Le jeu existe deja" });
             }
 
-            const game = await Game.create(req.body);
+            if (!req.file) {
+                return res.status(400).json({ message: "Une image est obligatoire" });
+            }
+
+            const game = await Game.create({...req.body, image: req.file.path});
 
             res.json(game);
         } catch (error) {
@@ -76,7 +80,7 @@ class GameController {
                 return res.status(404).json({ message: "Jeu non trouvé" });
             }
 
-            await game.update(req.body);
+            await game.update({ ...req.body, ...(req.file && { image: req.file.path }) });
 
             res.json(game);
         } catch (error) {

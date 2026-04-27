@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', MangaController.getAll);
 router.get('/:id', MangaController.getById);
 router.post('/', upload.single('image'), MangaController.create);
-router.put('/:id', MangaController.update);
+router.put('/:id', upload.single('image'), MangaController.update);
 router.delete('/:id', MangaController.delete);
 
 export default router;

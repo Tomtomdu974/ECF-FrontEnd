@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', GameController.getAll);
 router.get('/:id', GameController.getById);
 router.post('/', upload.single('image'), GameController.create);
-router.put('/:id', GameController.update);
+router.put('/:id', upload.single('image'), GameController.update);
 router.delete('/:id', GameController.delete);
 
 export default router;

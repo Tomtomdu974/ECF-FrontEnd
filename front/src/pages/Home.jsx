@@ -5,6 +5,7 @@ import { fetchMangas } from "../api/manga";
 import { fetchAnimes } from "../api/anime";
 import { fetchCategories } from "../api/category";
 import { fetchGenres } from "../api/genre";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Home = () => {
     const [games, setGames] = useState([]);
@@ -48,7 +49,7 @@ const Home = () => {
         });
     }, []);
 
-    return mangas && (
+    return (
         <div>
             <h1>Accueil</h1>
             <p>Rechercher</p>
@@ -72,10 +73,10 @@ const Home = () => {
 
             <div>
                 <h2>Manga</h2>
-                {mangas && mangas.map((manga) => (
+                {mangas && mangas.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((manga) => (
                     <div key={manga.id}>
                         <Link to={`/manga/${manga.id}`}><h3>{manga.title}</h3></Link>
-                        <img src={manga.poster?.data[0]?.images?.jpg?.image_url} alt={manga.title} />
+                        <img src={`${API_URL}/${manga.image}`} alt={manga.title} />
                         <p>{manga.description}</p>
                         <p>{manga.releaseDate}</p>
                         <p>{manga.rating}</p>
@@ -86,7 +87,7 @@ const Home = () => {
 
             <div>
                 <h2>Animes</h2>
-                {animes && animes.map((anime) => (
+                {animes && animes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((anime) => (
                     <div key={anime.id}>
                         <Link to={`/anime/${anime.id}`}><h3>{anime.title}</h3></Link>
                         <p>{anime.description}</p>
@@ -99,10 +100,10 @@ const Home = () => {
 
             <div>
                 <h2>Jeux vidéos</h2>
-                {games.map((game) => (
+                {games && games.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((game) => (
                     <div key={game.id}>
                         <Link to={`/game/${game.id}`}><h3>{game.title}</h3></Link>
-                        <img src={game.poster?.[0]?.background_image} alt={game.title} />
+                        <img src={`${API_URL}/${game.image}`} alt={game.title} />
                         <p>{game.description}</p>
                         <p>{game.releaseDate}</p>
                         <p>{game.rating}</p>

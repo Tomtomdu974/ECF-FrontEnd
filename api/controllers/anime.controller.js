@@ -58,7 +58,11 @@ class AnimeController {
                 return res.status(400).json({ message: "Anime déjà existant" });
             }
 
-            const anime = await Anime.create(req.body);
+            if (!req.file) {
+                return res.status(400).json({ message: "Une image est obligatoire" });
+            }
+
+            const anime = await Anime.create({ ...req.body, image: req.file.path });
 
             res.json(anime);
         } catch (error) {
@@ -76,7 +80,7 @@ class AnimeController {
                 return res.status(404).json({ message: "Anime non trouvé" });
             }
 
-            await anime.update(req.body);
+            await anime.update({...req.body, ...(req.file && { image: req.file.path })});
 
             res.json(anime);
         } catch (error) {

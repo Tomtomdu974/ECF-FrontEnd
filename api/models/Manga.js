@@ -16,7 +16,7 @@ const Manga = db.define('Manga', {
         allowNull: false
     },
     description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     nbVolumes: {
