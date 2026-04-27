@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
-import { fetchGameById, deleteGame } from "../api/game";
+import { fetchGameById, deleteGame } from "../../api/game";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const GameDetail = () => {
@@ -16,7 +16,7 @@ const GameDetail = () => {
 
     useEffect(() => {
         fetchGameById(id).then(data => setGame(data));
-    }, []); 
+    }, []);
 
     return (
         <div>

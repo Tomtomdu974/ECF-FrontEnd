@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
-import { fetchAnimeById, deleteAnime } from "../api/anime";
+import { fetchAnimeById, deleteAnime } from "../../api/anime";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const AnimeDetail = () => {

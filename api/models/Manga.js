@@ -8,7 +8,7 @@ const Manga = db.define('Manga', {
         unique: true
     },
     release_year: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DATEONLY,
         allowNull: false
     },
     author: {

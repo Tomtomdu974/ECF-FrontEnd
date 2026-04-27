@@ -8,7 +8,7 @@ const Anime = db.define('Anime', {
         unique: true
     },
     release_year: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DATEONLY,
         allowNull: false
     },
     author: {
@@ -16,7 +16,7 @@ const Anime = db.define('Anime', {
         allowNull: false
     },
     description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     nbEpisodes: {

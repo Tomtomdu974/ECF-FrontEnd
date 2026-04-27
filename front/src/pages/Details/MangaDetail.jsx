@@ -1,6 +1,6 @@
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { fetchMangaById, deleteManga } from '../api/manga';
+import { fetchMangaById, deleteManga } from '../../api/manga';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const MangaDetail = () => {
@@ -8,11 +8,11 @@ const MangaDetail = () => {
     const [manga, setManga] = useState({});
 
     const removeGame = async (id) => {
-            await deleteManga(id);
-    
+        await deleteManga(id);
+
         const data = await fetchMangaById();
-            setManga(data);
-        }
+        setManga(data);
+    }
 
     useEffect(() => {
         fetchMangaById(id).then(data => setManga(data));

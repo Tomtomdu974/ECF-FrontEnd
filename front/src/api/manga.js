@@ -37,7 +37,7 @@ export const fetchMangaById = async (id) => {
 export const createManga = async (manga) => {
     const response = await fetch(`${ENDPOINT}`, {
         method: "POST",
-        body: JSON.stringify(manga)
+        body: manga
     })
 
     const data = await response.json();

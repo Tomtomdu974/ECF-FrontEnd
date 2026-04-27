@@ -37,7 +37,7 @@ export const fetchAnimeById = async (id) => {
 export const createAnime = async (anime) => {
     const response = await fetch(`${ENDPOINT}`, {
         method: "POST",
-        body: JSON.stringify(anime)
+        body: anime
     })
 
     const data = await response.json();

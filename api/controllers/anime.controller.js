@@ -20,7 +20,7 @@ class AnimeController {
 
             const animes = await Anime.findAll({
                 where,
-                include: Category
+                include: [Category, Gender]
             });
 
 
@@ -81,7 +81,7 @@ class AnimeController {
                 return res.status(404).json({ message: "Anime non trouvé" });
             }
 
-            await anime.update({...req.body, ...(req.file && { image: req.file.path })});
+            await anime.update({ ...req.body, ...(req.file && { image: req.file.path }) });
 
             res.json(anime);
         } catch (error) {

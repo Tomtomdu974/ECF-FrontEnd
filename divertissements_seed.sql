@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 21 avril 2026 à 15:21
+-- Généré le : dim. 27 avril 2026
 -- Version du serveur : 9.1.0
 -- Version de PHP : 8.4.0
 
@@ -49,10 +49,6 @@ CREATE TABLE IF NOT EXISTS `Categories` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Déchargement des données de la table `Categories`
---
-
 INSERT INTO `Categories` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
 (1, 'Anime', '2026-04-21 15:21:00', '2026-04-21 15:21:00'),
 (2, 'Manga', '2026-04-21 15:21:00', '2026-04-21 15:21:00'),
@@ -72,10 +68,6 @@ CREATE TABLE IF NOT EXISTS `Genders` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `Genders`
---
 
 INSERT INTO `Genders` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
 (1, 'Shonen', '2026-04-21 15:21:00', '2026-04-21 15:21:00'),
@@ -107,10 +99,6 @@ CREATE TABLE IF NOT EXISTS `Users` (
   UNIQUE KEY `userName` (`userName`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Déchargement des données de la table `Users`
---
-
 INSERT INTO `Users` (`id`, `firstName`, `lastName`, `email`, `password`, `userName`, `createdAt`, `updatedAt`) VALUES
 (1, 'Lucas', 'Martin', 'lucas.martin@example.com', '$2b$10$ExempleHashPassword001', 'lucasm', '2026-04-21 15:21:00', '2026-04-21 15:21:00'),
 (2, 'Emma', 'Bernard', 'emma.bernard@example.com', '$2b$10$ExempleHashPassword002', 'emmab', '2026-04-21 15:21:00', '2026-04-21 15:21:00'),
@@ -126,10 +114,11 @@ INSERT INTO `Users` (`id`, `firstName`, `lastName`, `email`, `password`, `userNa
 CREATE TABLE IF NOT EXISTS `Animes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `release_year` int NOT NULL,
+  `release_year` date NOT NULL,
   `author` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` text NOT NULL,
   `nbEpisodes` int NOT NULL,
+  `image` varchar(255) NOT NULL DEFAULT 'uploads/placeholder.jpg',
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `CategoryId` int DEFAULT NULL,
@@ -140,15 +129,11 @@ CREATE TABLE IF NOT EXISTS `Animes` (
   KEY `GenderId` (`GenderId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Déchargement des données de la table `Animes`
---
-
-INSERT INTO `Animes` (`id`, `title`, `release_year`, `author`, `description`, `nbEpisodes`, `createdAt`, `updatedAt`, `CategoryId`, `GenderId`) VALUES
-(1, 'Attack on Titan', 2013, 'Hajime Isayama', 'Un anime sombre ou l humanite lutte pour survivre face a des titans geants.', 89, '2026-04-21 15:21:00', '2026-04-21 15:21:00', 1, 7),
-(2, 'Death Note', 2006, 'Tsugumi Ohba', 'Un lyceen trouve un carnet capable de tuer toute personne dont le nom y est ecrit.', 37, '2026-04-21 15:21:00', '2026-04-21 15:21:00', 1, 2),
-(3, 'Fullmetal Alchemist Brotherhood', 2009, 'Hiromu Arakawa', 'Deux freres alchimistes cherchent la pierre philosophale apres une experience interdite.', 64, '2026-04-21 15:21:00', '2026-04-21 15:21:00', 1, 5),
-(4, 'Demon Slayer', 2019, 'Koyoharu Gotouge', 'Un jeune pourfendeur de demons combat pour sauver sa soeur transformee.', 55, '2026-04-21 15:21:00', '2026-04-21 15:21:00', 1, 1);
+INSERT INTO `Animes` (`id`, `title`, `release_year`, `author`, `description`, `nbEpisodes`, `image`, `createdAt`, `updatedAt`, `CategoryId`, `GenderId`) VALUES
+(1, 'Attack on Titan', '2013-04-07', 'Hajime Isayama', 'Un anime sombre ou l humanite lutte pour survivre face a des titans geants.', 89, 'uploads/placeholder.jpg', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 1, 7),
+(2, 'Death Note', '2006-10-04', 'Tsugumi Ohba', 'Un lyceen trouve un carnet capable de tuer toute personne dont le nom y est ecrit.', 37, 'uploads/placeholder.jpg', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 1, 2),
+(3, 'Fullmetal Alchemist Brotherhood', '2009-04-05', 'Hiromu Arakawa', 'Deux freres alchimistes cherchent la pierre philosophale apres une experience interdite.', 64, 'uploads/placeholder.jpg', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 1, 5),
+(4, 'Demon Slayer', '2019-04-06', 'Koyoharu Gotouge', 'Un jeune pourfendeur de demons combat pour sauver sa soeur transformee.', 55, 'uploads/placeholder.jpg', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -159,10 +144,11 @@ INSERT INTO `Animes` (`id`, `title`, `release_year`, `author`, `description`, `n
 CREATE TABLE IF NOT EXISTS `Mangas` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `release_year` int NOT NULL,
+  `release_year` date NOT NULL,
   `author` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` text NOT NULL,
   `nbVolumes` int NOT NULL,
+  `image` varchar(255) NOT NULL DEFAULT 'uploads/placeholder.jpg',
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `CategoryId` int DEFAULT NULL,
@@ -173,15 +159,11 @@ CREATE TABLE IF NOT EXISTS `Mangas` (
   KEY `GenderId` (`GenderId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Déchargement des données de la table `Mangas`
---
-
-INSERT INTO `Mangas` (`id`, `title`, `release_year`, `author`, `description`, `nbVolumes`, `createdAt`, `updatedAt`, `CategoryId`, `GenderId`) VALUES
-(1, 'One Piece', 1997, 'Eiichiro Oda', 'Les aventures de Luffy et de son equipage a la recherche du tresor ultime.', 108, '2026-04-21 15:21:00', '2026-04-21 15:21:00', 2, 1),
-(2, 'Naruto', 1999, 'Masashi Kishimoto', 'Un jeune ninja reve de devenir Hokage et de gagner la reconnaissance de tous.', 72, '2026-04-21 15:21:00', '2026-04-21 15:21:00', 2, 1),
-(3, 'Berserk', 1989, 'Kentaro Miura', 'Un manga de dark fantasy suivant le destin tragique du guerrier Guts.', 42, '2026-04-21 15:21:00', '2026-04-21 15:21:00', 2, 2),
-(4, 'Tokyo Ghoul', 2011, 'Sui Ishida', 'Un etudiant devient mi humain mi goule apres une transplantation qui change sa vie.', 14, '2026-04-21 15:21:00', '2026-04-21 15:21:00', 2, 8);
+INSERT INTO `Mangas` (`id`, `title`, `release_year`, `author`, `description`, `nbVolumes`, `image`, `createdAt`, `updatedAt`, `CategoryId`, `GenderId`) VALUES
+(1, 'One Piece', '1997-07-22', 'Eiichiro Oda', 'Les aventures de Luffy et de son equipage a la recherche du tresor ultime.', 108, 'uploads/placeholder.jpg', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 2, 1),
+(2, 'Naruto', '1999-09-21', 'Masashi Kishimoto', 'Un jeune ninja reve de devenir Hokage et de gagner la reconnaissance de tous.', 72, 'uploads/placeholder.jpg', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 2, 1),
+(3, 'Berserk', '1989-08-25', 'Kentaro Miura', 'Un manga de dark fantasy suivant le destin tragique du guerrier Guts.', 42, 'uploads/placeholder.jpg', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 2, 2),
+(4, 'Tokyo Ghoul', '2011-09-08', 'Sui Ishida', 'Un etudiant devient mi humain mi goule apres une transplantation qui change sa vie.', 14, 'uploads/placeholder.jpg', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 2, 8);
 
 -- --------------------------------------------------------
 
@@ -192,9 +174,10 @@ INSERT INTO `Mangas` (`id`, `title`, `release_year`, `author`, `description`, `n
 CREATE TABLE IF NOT EXISTS `Games` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `release_year` int NOT NULL,
+  `release_year` date NOT NULL,
   `author` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `image` varchar(255) NOT NULL DEFAULT 'uploads/placeholder.jpg',
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `CategoryId` int DEFAULT NULL,
@@ -205,15 +188,11 @@ CREATE TABLE IF NOT EXISTS `Games` (
   KEY `GenderId` (`GenderId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Déchargement des données de la table `Games`
---
-
-INSERT INTO `Games` (`id`, `title`, `release_year`, `author`, `description`, `createdAt`, `updatedAt`, `CategoryId`, `GenderId`) VALUES
-(1, 'The Legend of Zelda Breath of the Wild', 2017, 'Nintendo', 'Un jeu d aventure en monde ouvert ou Link explore Hyrule librement.', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 3, 5),
-(2, 'Elden Ring', 2022, 'FromSoftware', 'Un action RPG exigeant dans un univers de dark fantasy vaste et mysterieux.', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 3, 5),
-(3, 'Minecraft', 2011, 'Mojang', 'Un jeu bac a sable base sur la construction l exploration et la survie.', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 3, 6),
-(4, 'Hades', 2020, 'Supergiant Games', 'Un rogue lite nerveux inspire de la mythologie grecque.', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 3, 7);
+INSERT INTO `Games` (`id`, `title`, `release_year`, `author`, `description`, `image`, `createdAt`, `updatedAt`, `CategoryId`, `GenderId`) VALUES
+(1, 'The Legend of Zelda Breath of the Wild', '2017-03-03', 'Nintendo', 'Un jeu d aventure en monde ouvert ou Link explore Hyrule librement.', 'uploads/placeholder.jpg', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 3, 5),
+(2, 'Elden Ring', '2022-02-25', 'FromSoftware', 'Un action RPG exigeant dans un univers de dark fantasy vaste et mysterieux.', 'uploads/placeholder.jpg', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 3, 5),
+(3, 'Minecraft', '2011-11-18', 'Mojang', 'Un jeu bac a sable base sur la construction l exploration et la survie.', 'uploads/placeholder.jpg', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 3, 6),
+(4, 'Hades', '2020-09-17', 'Supergiant Games', 'Un rogue lite nerveux inspire de la mythologie grecque.', 'uploads/placeholder.jpg', '2026-04-21 15:21:00', '2026-04-21 15:21:00', 3, 7);
 
 -- --------------------------------------------------------
 

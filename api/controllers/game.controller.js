@@ -1,10 +1,10 @@
-import { Game, Category } from "../models/index.js";
+import { Game, Category, Gender } from "../models/index.js";
 import { Op } from 'sequelize';
 
 class GameController {
     getAll = async (req, res) => {
         try {
-            const { category, search } = req.query;
+            const { category, search, selectedGenre } = req.query;
             let where = {};
             if (category) {
                 where.CategoryId = category
@@ -14,9 +14,13 @@ class GameController {
                 where.title = { [Op.like]: `%${search}%` }
             }
 
+            if (selectedGenre) {
+                where.GenderId = selectedGenre
+            }
+
             const games = await Game.findAll({
                 where,
-                include: Category
+                include: [Category, Gender]
             });
 
             res.json(games);
@@ -59,7 +63,7 @@ class GameController {
                 return res.status(400).json({ message: "Une image est obligatoire" });
             }
 
-            const game = await Game.create({...req.body, image: req.file.path});
+            const game = await Game.create({ ...req.body, image: req.file.path });
 
             res.json(game);
         } catch (error) {
