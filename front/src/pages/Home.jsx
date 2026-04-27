@@ -1,107 +1,88 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { fecthGames, deleteGame } from "../api/game";
-import { fetchMangas } from "../api/manga";
-import { fetchAnimes } from "../api/anime";
-import { fetchCategories } from "../api/category";
-import { fetchGenres } from "../api/genre";
+import { fetchMangas, deleteManga } from "../api/manga";
+import { fetchAnimes, deleteAnime } from "../api/anime";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Home = () => {
     const [games, setGames] = useState([]);
-    const [categories, setCategories] = useState([]);
     const [search, setSearch] = useState('');
-    const [selectedGenre, setSelectedGenre] = useState([]);
-    const [category, setCategory] = useState('');
     const [mangas, setMangas] = useState([]);
     const [animes, setAnimes] = useState([]);
 
     const removeGame = async (id) => {
         await deleteGame(id);
 
-        const data = await fecthGames(search, selectedGenre, category);
+        const data = await fecthGames(search);
         setGames(data);
     }
 
-    useEffect(() => {
-        fetchMangas(search, selectedGenre, category).then(data => setMangas(data));
-    }, [search, selectedGenre, category]);
+    const removeManga = async (id) => {
+        await deleteManga(id);
+
+        const data = await fetchMangas(search);
+        setMangas(data);
+    }
+
+    const removeAnime = async (id) => {
+        await deleteAnime(id);
+
+        const data = await fetchAnimes(search);
+        setAnimes(data);
+    }
 
     useEffect(() => {
-        fecthGames(search, selectedGenre, category).then(data => setGames(data));
-    }, [search, selectedGenre, category]);
+        fetchMangas(search).then(data => setMangas(data));
+    }, [search]);
 
     useEffect(() => {
-        fetchAnimes(search, selectedGenre, category).then(data => setAnimes(data));
-    }, [search, selectedGenre, category]);
+        fecthGames(search).then(data => setGames(data));
+    }, [search]);
 
     useEffect(() => {
-        fetchCategories().then(data => setCategories(data));
-    }, []);
-
-    useEffect(() => {
-        fetchGenres().then(data => {
-            if (Array.isArray(data)) {
-                setSelectedGenre(data);
-            } else {
-                setSelectedGenre([]);
-            }
-        });
-    }, []);
+        fetchAnimes(search).then(data => setAnimes(data));
+    }, [search]);
 
     return (
         <div>
             <h1>Accueil</h1>
+            <Link to="/catalogue">Catalogue</Link>
             <p>Rechercher</p>
             <input type="text" onChange={(e) => setSearch(e.target.value)} />
 
-            <p>Genre</p>
-            <select onChange={(e) => setSelectedGenre(e.target.value && Array.isArray(e.target.value) ? e.target.value : [])}>
-                <option value="">Tous</option>
-                {selectedGenre.map((genre) => (
-                    <option key={genre.id} value={genre.name}>{genre.name}</option>
-                ))}
-            </select>
-
-            <p>Categorie</p>
-            <select onChange={(e) => setCategory(e.target.value)}>
-                <option value="">Toutes</option>
-                {categories.map((category) => (
-                    <option key={category.id} value={category.name}>{category.name}</option>
-                ))}
-            </select>
-
             <div>
                 <h2>Manga</h2>
-                {mangas && mangas.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((manga) => (
+                {Array.isArray(mangas) && mangas.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 6).map((manga) => (
                     <div key={manga.id}>
                         <Link to={`/manga/${manga.id}`}><h3>{manga.title}</h3></Link>
                         <img src={`${API_URL}/${manga.image}`} alt={manga.title} />
                         <p>{manga.description}</p>
                         <p>{manga.releaseDate}</p>
                         <p>{manga.rating}</p>
-                        <button onClick={() => removeGame(manga.id)}>Supprimer</button>
+                        <button onClick={() => removeManga(manga.id)}>Supprimer</button>
                     </div>
                 ))}
             </div>
 
             <div>
                 <h2>Animes</h2>
-                {animes && animes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((anime) => (
+                {Array.isArray(animes) && animes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 6).map((anime) => (
                     <div key={anime.id}>
                         <Link to={`/anime/${anime.id}`}><h3>{anime.title}</h3></Link>
                         <img src={`${API_URL}/${anime.image}`} alt={anime.title} />
                         <p>{anime.description}</p>
                         <p>{anime.releaseDate}</p>
                         <p>{anime.rating}</p>
-                        <button onClick={() => removeGame(anime.id)}>Supprimer</button>
+                        <button onClick={() => removeAnime(anime.id)}>Supprimer</button>
                     </div>
                 ))}
             </div>
 
             <div>
                 <h2>Jeux vidéos</h2>
-                {games && games.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((game) => (
+                {Array.isArray(games) && games.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 6).map((game) => (
                     <div key={game.id}>
                         <Link to={`/game/${game.id}`}><h3>{game.title}</h3></Link>
                         <img src={`${API_URL}/${game.image}`} alt={game.title} />

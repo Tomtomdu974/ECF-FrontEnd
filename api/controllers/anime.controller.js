@@ -1,10 +1,10 @@
-import { Anime, Category } from "../models/index.js";
+import { Anime, Category, Gender } from "../models/index.js";
 import { Op } from 'sequelize';
 
 class AnimeController {
     getAll = async (req, res) => {
         try {
-            const { category, search } = req.query;
+            const { category, search, selectedGenre } = req.query;
             let where = {};
             if (category) {
                 where.CategoryId = category
@@ -14,14 +14,15 @@ class AnimeController {
                 where.title = { [Op.like]: `%${search}%` }
             }
 
+            if (selectedGenre) {
+                where.GenderId = selectedGenre
+            }
+
             const animes = await Anime.findAll({
                 where,
                 include: Category
             });
 
-            if (animes.length === 0) {
-                return res.status(404).json({ message: "Aucun anime trouvé" });
-            }
 
             res.json(animes);
         } catch (error) {

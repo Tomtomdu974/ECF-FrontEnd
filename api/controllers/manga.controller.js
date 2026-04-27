@@ -1,11 +1,12 @@
-import { Manga, Category } from "../models/index.js";
+import { Manga, Category, Gender } from "../models/index.js";
 import { Op } from 'sequelize';
 
 class MangaController {
     getAll = async (req, res) => {
         try {
-            const { category, search } = req.query;
+            const { category, search, selectedGenre } = req.query;
             let where = {};
+
             if (category) {
                 where.CategoryId = category
             }
@@ -14,14 +15,14 @@ class MangaController {
                 where.title = { [Op.like]: `%${search}%` }
             }
 
+            if (selectedGenre) {
+                where.GenderId = selectedGenre
+            }
+
             const mangas = await Manga.findAll({
                 where,
-                include: Category
+                include: [Category, Gender]
             });
-
-            if (mangas.length === 0) {
-                return res.status(404).json({ message: "Aucun manga trouvé" });
-            }
 
             res.json(mangas);
         } catch (error) {

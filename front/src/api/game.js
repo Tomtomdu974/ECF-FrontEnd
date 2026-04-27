@@ -5,7 +5,7 @@ export const fecthGames = async (search = '', selectedGenre = '', category = '')
     let endpoint = ENDPOINT + '?page=1';
 
     if (selectedGenre.length > 0) {
-        endpoint += `&genre=${selectedGenre}`;
+        endpoint += `&selectedGenre=${selectedGenre}`;
     }
 
     if (search.length > 0) {

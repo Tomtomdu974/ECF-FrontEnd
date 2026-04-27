@@ -19,10 +19,6 @@ class GameController {
                 include: Category
             });
 
-            if (games.length === 0) {
-                return res.status(404).json({ message: "Aucun jeu trouvé" });
-            }
-
             res.json(games);
         } catch (error) {
             console.error(error);
