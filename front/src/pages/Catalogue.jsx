@@ -117,7 +117,7 @@ const Catalogue = () => {
                             .map((manga) => (
                                 <li key={manga.id}>
                                     <article className="media-card">
-                                        <h3>
+                                        <h3 className="media-card__title">
                                             <Link to={`/manga/${manga.id}`}>{manga.title}</Link>
                                         </h3>
                                         <figure className="media-card__image">
@@ -147,7 +147,7 @@ const Catalogue = () => {
                             .map((anime) => (
                                 <li key={anime.id}>
                                     <article className="media-card">
-                                        <h3>
+                                        <h3 className="media-card__title">
                                             <Link to={`/anime/${anime.id}`}>{anime.title}</Link>
                                         </h3>
                                         <figure className="media-card__image">
@@ -177,7 +177,7 @@ const Catalogue = () => {
                             .map((game) => (
                                 <li key={game.id}>
                                     <article className="media-card">
-                                        <h3>
+                                        <h3 className="media-card__title">
                                             <Link to={`/game/${game.id}`}>{game.title}</Link>
                                         </h3>
                                         <figure className="media-card__image">

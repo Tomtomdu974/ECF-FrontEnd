@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { fecthGames, deleteGame } from "../api/game";
 import { fetchMangas, deleteManga } from "../api/manga";
 import { fetchAnimes, deleteAnime } from "../api/anime";
+import { useFavorite } from "../contexts/FavoritesContext";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,6 +12,7 @@ const Home = () => {
     const [search, setSearch] = useState('');
     const [mangas, setMangas] = useState([]);
     const [animes, setAnimes] = useState([]);
+    const { isFavorite, toggleFavorite } = useFavorite();
 
     const removeGame = async (id) => {
         await deleteGame(id);
@@ -64,27 +66,31 @@ const Home = () => {
                         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                         .slice(0, 6)
                         .map((manga) => (
-                            <Link to={`/manga/${manga.id}`}>
-                                <li key={manga.id}>
-                                    <article className="media-card">
-                                        <h3>
-                                            {manga.title}
-                                        </h3>
-                                        <figure className="media-card__image">
-                                            <img src={`${API_URL}/${manga.image}`} alt={manga.title} />
-                                        </figure>
-                                        <div className="media-card__content">
-                                            <p className="media-card__author">Auteur : {manga.author}</p>
-                                            <p className="media-card__description">{manga.description}</p>
-                                            <p className="media-card__date">Date de sortie : {manga.release_year}</p>
-                                        </div>
-                                        <footer className="media-card__actions">
-                                            <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>
-                                            <button onClick={() => removeManga(manga.id)}>Supprimer</button>
-                                        </footer>
-                                    </article>
-                                </li>
-                            </Link>
+                            <li key={manga.id}>
+                                <article className="media-card">
+                                    <h3 className="media-card__title">
+                                        <Link to={`/manga/${manga.id}`} className="media-card__link">{manga.title}</Link>
+                                    </h3>
+
+                                    <figure className="media-card__image">
+                                        <img src={`${API_URL}/${manga.image}`} alt={manga.title} />
+                                    </figure>
+
+                                    <div className="media-card__content">
+                                        <p className="media-card__author">Auteur : {manga.author}</p>
+                                        <p className="media-card__description">{manga.description}</p>
+                                        <p className="media-card__date">Date de sortie : {manga.release_year}</p>
+                                    </div>
+
+                                    <footer className="media-card__actions">
+                                        <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>
+                                        <button onClick={() => toggleFavorite({...manga, type: "manga"})}>
+                                            {isFavorite(manga.id, "manga") ? "Retirer des favoris" : "Ajouter au favoris"}
+                                        </button>
+                                        <button onClick={() => removeManga(manga.id)}>Supprimer</button>
+                                    </footer>
+                                </article>
+                            </li>
                         ))}
                 </ul>
             </section>
@@ -99,8 +105,8 @@ const Home = () => {
                         .map((anime) => (
                             <li key={anime.id}>
                                 <article className="media-card">
-                                    <h3>
-                                        <Link to={`/anime/${anime.id}`}>{anime.title}</Link>
+                                    <h3 className="media-card__title">
+                                        <Link to={`/anime/${anime.id}`} className="media-card__link">{anime.title}</Link>
                                     </h3>
                                     <figure className="media-card__image">
                                         <img src={`${API_URL}/${anime.image}`} alt={anime.title} />
@@ -110,6 +116,9 @@ const Home = () => {
                                     </div>
                                     <footer className="media-card__actions">
                                         <Link to={`/edit/anime/${anime.id}`}>Modifier</Link>
+                                        <button onClick={() => toggleFavorite({...anime, type: "anime"})}>
+                                            {isFavorite(anime.id, "anime") ? "Retirer des favoris" : "Ajouter au favoris"}
+                                        </button>
                                         <button onClick={() => removeAnime(anime.id)}>Supprimer</button>
                                     </footer>
                                 </article>
@@ -128,8 +137,8 @@ const Home = () => {
                         .map((game) => (
                             <li key={game.id}>
                                 <article className="media-card">
-                                    <h3>
-                                        <Link to={`/game/${game.id}`}>{game.title}</Link>
+                                    <h3 className="media-card__title">
+                                        <Link to={`/game/${game.id}`} className="media-card__link">{game.title}</Link>
                                     </h3>
                                     <figure className="media-card__image">
                                         <img src={`${API_URL}/${game.image}`} alt={game.title} />
@@ -139,6 +148,9 @@ const Home = () => {
                                     </div>
                                     <footer className="media-card__actions">
                                         <Link to={`/edit/game/${game.id}`}>Modifier</Link>
+                                        <button onClick={() => toggleFavorite({...game, type: "game"})}>
+                                            {isFavorite(game.id, "game") ? "Retirer des favoris" : "Ajouter au favoris"}
+                                        </button>
                                         <button onClick={() => removeGame(game.id)}>Supprimer</button>
                                     </footer>
                                 </article>

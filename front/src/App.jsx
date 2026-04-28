@@ -12,6 +12,7 @@ import AddGame from './pages/Add/AddGame'
 import EditManga from './pages/Edit/EditManga'
 import EditGame from './pages/Edit/EditGame'
 import EditAnime from './pages/Edit/EditAnime'
+import Favorites from './pages/Favorites'
 
 import Header from './layouts/Header'
 import Footer from './layouts/Footer'
@@ -33,6 +34,7 @@ function App() {
         <Route path='/edit/manga/:id' element={<EditManga />} />
         <Route path='/edit/game/:id' element={<EditGame />} />
         <Route path='/edit/anime/:id' element={<EditAnime />} />
+        <Route path='/favorites' element={<Favorites />} />
       </Routes>
       <Footer />
     </BrowserRouter>
