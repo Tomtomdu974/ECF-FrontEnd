@@ -46,52 +46,107 @@ const Home = () => {
     }, [search]);
 
     return (
-        <div>
-            <h1 className="title">Bienvenu sur Otaku Verse</h1>
-            <p>Rechercher</p>
-            <input type="text" onChange={(e) => setSearch(e.target.value)} />
+        <main>
+            <header className="hero">
+                <h1 className="title">Bienvenue sur Otaku Verse</h1>
+                <form className="search-form" role="search">
+                    <label htmlFor="search">
+                        <input id="search" type="search" placeholder="Rechercher..." onChange={(e) => setSearch(e.target.value)} />
+                    </label>
+                </form>
+            </header>
 
-            <div>
-                <h2>Manga</h2>
-                {Array.isArray(mangas) && mangas.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 6).map((manga) => (
-                    <div key={manga.id}>
-                        <Link to={`/manga/${manga.id}`}><h3>{manga.title}</h3></Link>
-                        <img src={`${API_URL}/${manga.image}`} alt={manga.title} />
-                        <h4>Auteur : {manga.author}</h4>
-                        <p>{manga.description}</p>
-                        <p>Date de sortie : {manga.release_year}</p>
-                        <button onClick={() => removeManga(manga.id)}>Supprimer</button>
-                        <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>
-                    </div>
-                ))}
-            </div>
+            {/* Section Mangas */}
+            <section className="media-section" aria-labelledby="manga-heading">
+                <h2 id="manga-heading">Manga</h2>
+                <ul className="media-list">
+                    {Array.isArray(mangas) && mangas
+                        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                        .slice(0, 6)
+                        .map((manga) => (
+                            <Link to={`/manga/${manga.id}`}>
+                                <li key={manga.id}>
+                                    <article className="media-card">
+                                        <h3>
+                                            {manga.title}
+                                        </h3>
+                                        <figure className="media-card__image">
+                                            <img src={`${API_URL}/${manga.image}`} alt={manga.title} />
+                                        </figure>
+                                        <div className="media-card__content">
+                                            <p className="media-card__author">Auteur : {manga.author}</p>
+                                            <p className="media-card__description">{manga.description}</p>
+                                            <p className="media-card__date">Date de sortie : {manga.release_year}</p>
+                                        </div>
+                                        <footer className="media-card__actions">
+                                            <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>
+                                            <button onClick={() => removeManga(manga.id)}>Supprimer</button>
+                                        </footer>
+                                    </article>
+                                </li>
+                            </Link>
+                        ))}
+                </ul>
+            </section>
 
-            <div>
-                <h2>Animes</h2>
-                {Array.isArray(animes) && animes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 6).map((anime) => (
-                    <div key={anime.id}>
-                        <Link to={`/anime/${anime.id}`}><h3>{anime.title}</h3></Link>
-                        <img src={`${API_URL}/${anime.image}`} alt={anime.title} />
-                        <p>{anime.description}</p>
-                        <Link to={`/edit/anime/${anime.id}`}>Modifier</Link>
-                        <button onClick={() => removeAnime(anime.id)}>Supprimer</button>
-                    </div>
-                ))}
-            </div>
+            {/* Section Animes */}
+            <section className="media-section" aria-labelledby="anime-heading">
+                <h2 id="anime-heading">Animes</h2>
+                <ul className="media-list">
+                    {Array.isArray(animes) && animes
+                        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                        .slice(0, 6)
+                        .map((anime) => (
+                            <li key={anime.id}>
+                                <article className="media-card">
+                                    <h3>
+                                        <Link to={`/anime/${anime.id}`}>{anime.title}</Link>
+                                    </h3>
+                                    <figure className="media-card__image">
+                                        <img src={`${API_URL}/${anime.image}`} alt={anime.title} />
+                                    </figure>
+                                    <div className="media-card__content">
+                                        <p className="media-card__description">{anime.description}</p>
+                                    </div>
+                                    <footer className="media-card__actions">
+                                        <Link to={`/edit/anime/${anime.id}`}>Modifier</Link>
+                                        <button onClick={() => removeAnime(anime.id)}>Supprimer</button>
+                                    </footer>
+                                </article>
+                            </li>
+                        ))}
+                </ul>
+            </section>
 
-            <div>
-                <h2>Jeux vidéos</h2>
-                {Array.isArray(games) && games.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 6).map((game) => (
-                    <div key={game.id}>
-                        <Link to={`/game/${game.id}`}><h3>{game.title}</h3></Link>
-                        <img src={`${API_URL}/${game.image}`} alt={game.title} />
-                        <p>{game.description}</p>
-                        <Link to={`/edit/game/${game.id}`}>Modifier</Link>
-                        <button onClick={() => removeGame(game.id)}>Supprimer</button>
-                    </div>
-                ))}
-            </div>
-        </div>
+            {/* Section Jeux vidéos */}
+            <section className="media-section" aria-labelledby="games-heading">
+                <h2 id="games-heading">Jeux vidéos</h2>
+                <ul className="media-list">
+                    {Array.isArray(games) && games
+                        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                        .slice(0, 6)
+                        .map((game) => (
+                            <li key={game.id}>
+                                <article className="media-card">
+                                    <h3>
+                                        <Link to={`/game/${game.id}`}>{game.title}</Link>
+                                    </h3>
+                                    <figure className="media-card__image">
+                                        <img src={`${API_URL}/${game.image}`} alt={game.title} />
+                                    </figure>
+                                    <div className="media-card__content">
+                                        <p className="media-card__description">{game.description}</p>
+                                    </div>
+                                    <footer className="media-card__actions">
+                                        <Link to={`/edit/game/${game.id}`}>Modifier</Link>
+                                        <button onClick={() => removeGame(game.id)}>Supprimer</button>
+                                    </footer>
+                                </article>
+                            </li>
+                        ))}
+                </ul>
+            </section>
+        </main>
     );
 };
 

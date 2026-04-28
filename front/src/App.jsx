@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router'
-import './App.css'
+import './styles/App.css'
+import './styles/Card.css'
 import Home from './pages/Home'
 import MangaDetail from './pages/Details/MangaDetail'
 import AnimeDetail from './pages/Details/AnimeDetail'
