@@ -1,8 +1,10 @@
+import '../styles/Footer.css';
+
 const Footer = () => {
     return (
-        <div>
-            <h3>Copyright © 2026 Otaku Verse</h3>
-        </div>
+        <footer>
+            <p className='footer'>Copyright © 2026 Otaku Verse</p>
+        </footer>
     );
 };
 
