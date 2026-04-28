@@ -12,10 +12,14 @@ import EditManga from './pages/Edit/EditManga'
 import EditGame from './pages/Edit/EditGame'
 import EditAnime from './pages/Edit/EditAnime'
 
+import Header from './layouts/Header'
+import Footer from './layouts/Footer'
+
 function App() {
 
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/manga/:id' element={<MangaDetail />} />
@@ -29,6 +33,7 @@ function App() {
         <Route path='/edit/game/:id' element={<EditGame />} />
         <Route path='/edit/anime/:id' element={<EditAnime />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }
