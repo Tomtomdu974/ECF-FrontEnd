@@ -47,8 +47,7 @@ const Home = () => {
 
     return (
         <div>
-            <h1>Accueil</h1>
-            <Link to="/catalogue">Catalogue</Link>
+            <h1 className="title">Bienvenu sur Otaku Verse</h1>
             <p>Rechercher</p>
             <input type="text" onChange={(e) => setSearch(e.target.value)} />
 
