@@ -22,12 +22,25 @@ const Form = ({
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError({});
+
         const formData = new FormData(e.target);
 
-        const data = await onSubmit(formData);
+        try {
+            const data = await onSubmit(formData);
+            return data;
+        } catch (err) {
+            if (err?.errors) {
+                setError(err.errors);
+                return;
+            }
 
-        if (data?.error) {
-            setError(data.error);
+            if (err?.message) {
+                setError({ global: err.message });
+                return;
+            }
+
+            setError({ global: "Une erreur s'est produite" });
         }
     };
 

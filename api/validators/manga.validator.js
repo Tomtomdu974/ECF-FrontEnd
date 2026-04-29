@@ -11,7 +11,7 @@ const validateManga = [
     body('release_year')
         .trim()
         .notEmpty()
-        .isInt({ min: 1960, max: new Date().getFullYear() })
+        .isDate()
         .withMessage('La date de sortie est obligatoire'),
     body('author')
         .trim()
@@ -25,13 +25,9 @@ const validateManga = [
     body('nbVolumes')
         .trim()
         .notEmpty()
-        .isInt({min: 1})
+        .isInt({ min: 1 })
         .withMessage('Le nombre de volumes est obligatoire'),
-    body('image')
-        .trim()
-        .notEmpty()
-        .withMessage('L\'image est obligatoire'),
-    body('categoryId')
+    body('CategoryId')
         .trim()
         .notEmpty()
         .withMessage('La catégorie est obligatoire')
@@ -51,7 +47,7 @@ const validateManga = [
                 throw new Error('Le genre n\'existe pas');
             }
         })
-    ]
+]
 
 const validateMangaId = [
     param('id')

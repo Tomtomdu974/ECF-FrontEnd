@@ -11,7 +11,7 @@ const validateGame = [
     body('release_year')
         .trim()
         .notEmpty()
-        .isInt({ min: 1960, max: new Date().getFullYear() })
+        .isDate()
         .withMessage('La date de sortie est obligatoire'),
     body('author')
         .trim()
@@ -22,11 +22,7 @@ const validateGame = [
         .trim()
         .notEmpty()
         .withMessage('La description est obligatoire'),
-    body('image')
-        .trim()
-        .notEmpty()
-        .withMessage('L\'image est obligatoire'),
-    body('categoryId')
+    body('CategoryId')
         .trim()
         .notEmpty()
         .withMessage('La catégorie est obligatoire')
@@ -36,7 +32,7 @@ const validateGame = [
                 throw new Error('La catégorie n\'existe pas');
             }
         }),
-    body('genderId')
+    body('GenderId')
         .trim()
         .notEmpty()
         .withMessage('Le genre est obligatoire')

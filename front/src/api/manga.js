@@ -42,6 +42,10 @@ export const createManga = async (manga) => {
 
     const data = await response.json();
 
+    if (!response.ok) {
+        throw data;
+    }
+
     return data;
 }
 
@@ -51,6 +55,10 @@ export const updateManga = async (id, formData) => {
         body: formData
     })
     const data = await response.json();
+
+    if (!response.ok) {
+        throw data;
+    }
 
     return data
 }
