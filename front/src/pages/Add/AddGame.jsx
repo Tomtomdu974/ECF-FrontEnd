@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { createGame } from "../../api/game";
 import Form from "../../components/forms/Form";
 
@@ -16,12 +16,18 @@ const AddGame = () => {
     };
 
     return (
-        <Form
-            type="game"
-            mode="add"
-            onSubmit={handleCreate}
-            submitLabel="Ajouter un jeu vidéo"
-        />
+        <>
+            <div className="media-card__actions">
+                <h1>Ajouter un Jeux Vidéo</h1>
+                <Link to={'/'}>Retour a l'accueil</Link>
+            </div>
+            <Form
+                type="game"
+                mode="add"
+                onSubmit={handleCreate}
+                submitLabel="Ajouter un jeu vidéo"
+            />
+        </>
     );
 };
 

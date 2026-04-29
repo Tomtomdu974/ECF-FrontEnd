@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams, Link } from "react-router";
 import { fetchGameById, updateGame } from "../../api/game";
 import Form from "../../components/forms/Form";
 
@@ -25,13 +25,19 @@ const EditGame = () => {
     if (!game) return <p>Chargement...</p>;
 
     return (
-        <Form
-            type="game"
-            mode="edit"
-            initialData={game}
-            onSubmit={handleUpdate}
-            submitLabel="Modifier le jeu vidéo"
-        />
+        <>
+            <div className="media-card__actions">
+                <h1>Modifier le manga</h1>
+                <Link to={'/'}>Retour a l'accueil</Link>
+            </div>
+            <Form
+                type="game"
+                mode="edit"
+                initialData={game}
+                onSubmit={handleUpdate}
+                submitLabel="Modifier le jeu vidéo"
+            />
+        </>
     );
 };
 

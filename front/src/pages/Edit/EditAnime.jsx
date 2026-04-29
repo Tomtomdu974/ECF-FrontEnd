@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams, Link } from "react-router";
 import { fetchAnimeById, updateAnime } from "../../api/anime";
 import Form from "../../components/forms/Form";
 
@@ -25,13 +25,19 @@ const EditAnime = () => {
     if (!anime) return <p>Chargement...</p>;
 
     return (
-        <Form
-            type="anime"
-            mode="edit"
-            initialData={anime}
-            onSubmit={handleUpdate}
-            submitLabel="Modifier l'anime"
-        />
+        <>
+            <div className="media-card__actions">
+                <h1>Modifier l'anime</h1>
+                <Link to={'/'}>Retour a l'accueil</Link>
+            </div>
+            <Form
+                type="anime"
+                mode="edit"
+                initialData={anime}
+                onSubmit={handleUpdate}
+                submitLabel="Modifier l'anime"
+            />
+        </>
     );
 };
 

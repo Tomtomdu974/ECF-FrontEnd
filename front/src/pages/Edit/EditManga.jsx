@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams, Link } from "react-router";
 import { fetchMangaById, updateManga } from "../../api/manga";
 import Form from "../../components/forms/Form";
 
@@ -25,13 +25,19 @@ const EditManga = () => {
     if (!manga) return <p>Chargement...</p>;
 
     return (
-        <Form
-            type="manga"
-            mode="edit"
-            initialData={manga}
-            onSubmit={handleUpdate}
-            submitLabel="Modifier le manga"
-        />
+        <>
+            <div className="media-card__actions">
+                <h1>Modifier le manga</h1>
+                <Link to={'/'}>Retour a l'accueil</Link>
+            </div>
+            <Form
+                type="manga"
+                mode="edit"
+                initialData={manga}
+                onSubmit={handleUpdate}
+                submitLabel="Modifier le manga"
+            />
+        </>
     );
 };
 

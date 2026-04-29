@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { createAnime } from "../../api/anime";
 import Form from "../../components/forms/Form";
 
@@ -16,12 +16,19 @@ const AddAnime = () => {
     };
 
     return (
-        <Form
-            type="anime"
-            mode="add"
-            onSubmit={handleCreate}
-            submitLabel="Ajouter un anime"
-        />
+        <>
+            <div className="media-card__actions">
+                <h1>Ajouter un Anime</h1>
+                <Link to={'/'}>Retour a l'accueil</Link>
+            </div>
+
+            <Form
+                type="anime"
+                mode="add"
+                onSubmit={handleCreate}
+                submitLabel="Ajouter un anime"
+            />
+        </>
     );
 };
 

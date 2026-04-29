@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { createManga } from "../../api/manga";
 import Form from "../../components/forms/Form";
 
@@ -16,12 +16,18 @@ const AddManga = () => {
     };
 
     return (
-        <Form
-            type="manga"
-            mode="add"
-            onSubmit={handleCreate}
-            submitLabel="Ajouter un manga"
-        />
+        <>
+            <div className="media-card__actions">
+                <h1>Ajouter un Manga</h1>
+                <Link to={'/'}>Retour a l'accueil</Link>
+            </div>
+            <Form
+                type="manga"
+                mode="add"
+                onSubmit={handleCreate}
+                submitLabel="Ajouter un manga"
+            />
+        </>
     );
 };
 

@@ -60,7 +60,10 @@ const Home = () => {
 
             {/* Section Mangas */}
             <section className="media-section" aria-labelledby="manga-heading">
-                <h2 id="manga-heading">Manga</h2>
+                <div className="media-card__actions">
+                    <h2 id="manga-heading">Manga ajout récent</h2>
+                    <Link to='/add/manga'>Ajouter un Manga</Link>
+                </div>
                 <ul className="media-list">
                     {Array.isArray(mangas) && mangas
                         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -84,7 +87,7 @@ const Home = () => {
 
                                     <footer className="media-card__actions">
                                         <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>
-                                        <button onClick={() => toggleFavorite({...manga, type: "manga"})}>
+                                        <button onClick={() => toggleFavorite({ ...manga, type: "manga" })}>
                                             {isFavorite(manga.id, "manga") ? "Retirer des favoris" : "Ajouter au favoris"}
                                         </button>
                                         <button onClick={() => removeManga(manga.id)}>Supprimer</button>
@@ -97,7 +100,10 @@ const Home = () => {
 
             {/* Section Animes */}
             <section className="media-section" aria-labelledby="anime-heading">
-                <h2 id="anime-heading">Animes</h2>
+                <div className="media-card__actions">
+                    <h2 id="anime-heading">Animes ajout récent</h2>
+                    <Link to='/add/anime'>Ajouter un Anime</Link>
+                </div>
                 <ul className="media-list">
                     {Array.isArray(animes) && animes
                         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -116,7 +122,7 @@ const Home = () => {
                                     </div>
                                     <footer className="media-card__actions">
                                         <Link to={`/edit/anime/${anime.id}`}>Modifier</Link>
-                                        <button onClick={() => toggleFavorite({...anime, type: "anime"})}>
+                                        <button onClick={() => toggleFavorite({ ...anime, type: "anime" })}>
                                             {isFavorite(anime.id, "anime") ? "Retirer des favoris" : "Ajouter au favoris"}
                                         </button>
                                         <button onClick={() => removeAnime(anime.id)}>Supprimer</button>
@@ -129,7 +135,10 @@ const Home = () => {
 
             {/* Section Jeux vidéos */}
             <section className="media-section" aria-labelledby="games-heading">
-                <h2 id="games-heading">Jeux vidéos</h2>
+                <div className="media-card__actions">
+                    <h2 id="games-heading">Jeux vidéos ajout récent</h2>
+                    <Link to='/add/game'>Ajouter un Jeux Vidéo</Link>
+                </div>
                 <ul className="media-list">
                     {Array.isArray(games) && games
                         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -148,7 +157,7 @@ const Home = () => {
                                     </div>
                                     <footer className="media-card__actions">
                                         <Link to={`/edit/game/${game.id}`}>Modifier</Link>
-                                        <button onClick={() => toggleFavorite({...game, type: "game"})}>
+                                        <button onClick={() => toggleFavorite({ ...game, type: "game" })}>
                                             {isFavorite(game.id, "game") ? "Retirer des favoris" : "Ajouter au favoris"}
                                         </button>
                                         <button onClick={() => removeGame(game.id)}>Supprimer</button>

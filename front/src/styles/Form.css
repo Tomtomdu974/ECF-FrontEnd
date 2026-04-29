@@ -117,3 +117,12 @@
         padding: 1.5rem;
     }
 }
+
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #facc15;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
