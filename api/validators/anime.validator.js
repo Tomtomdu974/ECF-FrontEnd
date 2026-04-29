@@ -31,7 +31,7 @@ const validateAnime = [
         .notEmpty()
         .isInt({min: 1})
         .withMessage('Le nombre d\'episodes est obligatoire'),
-    body('categoryId')
+    body('CategoryId')
         .trim()
         .notEmpty()
         .withMessage('La catégorie est obligatoire')

@@ -26,8 +26,9 @@ const Form = ({
 
         const data = await onSubmit(formData);
 
-        if (data?.error) {
-            setError(data.error);
+        if (data?.error || data?.message) {
+            setError(data.error || data.message);
+            return;
         }
     };
 

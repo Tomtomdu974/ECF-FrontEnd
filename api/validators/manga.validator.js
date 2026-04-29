@@ -31,7 +31,7 @@ const validateManga = [
         .trim()
         .notEmpty()
         .withMessage('L\'image est obligatoire'),
-    body('categoryId')
+    body('CategoryId')
         .trim()
         .notEmpty()
         .withMessage('La catégorie est obligatoire')

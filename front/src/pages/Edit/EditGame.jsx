@@ -27,7 +27,7 @@ const EditGame = () => {
     return (
         <>
             <div className="media-card__actions">
-                <h1>Modifier le manga</h1>
+                <h1>Modifier le jeux vidéo</h1>
                 <Link to={'/'}>Retour a l'accueil</Link>
             </div>
             <Form
@@ -35,7 +35,7 @@ const EditGame = () => {
                 mode="edit"
                 initialData={game}
                 onSubmit={handleUpdate}
-                submitLabel="Modifier le jeu vidéo"
+                submitLabel="Modifier le jeux vidéo"
             />
         </>
     );

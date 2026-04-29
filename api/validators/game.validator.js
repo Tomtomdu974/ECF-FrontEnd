@@ -26,7 +26,7 @@ const validateGame = [
         .trim()
         .notEmpty()
         .withMessage('L\'image est obligatoire'),
-    body('categoryId')
+    body('CategoryId')
         .trim()
         .notEmpty()
         .withMessage('La catégorie est obligatoire')
@@ -36,7 +36,7 @@ const validateGame = [
                 throw new Error('La catégorie n\'existe pas');
             }
         }),
-    body('genderId')
+    body('GenderId')
         .trim()
         .notEmpty()
         .withMessage('Le genre est obligatoire')
