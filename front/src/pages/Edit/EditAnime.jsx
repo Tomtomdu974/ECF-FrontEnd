@@ -15,9 +15,7 @@ const EditAnime = () => {
     const handleUpdate = async (formData) => {
         const data = await updateAnime(id, formData);
 
-        if (!data?.error) {
-            navigate(`/anime/${data.id}`);
-        }
+        navigate(`/anime/${data.id}`);
 
         return data;
     };

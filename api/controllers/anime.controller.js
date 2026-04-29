@@ -56,11 +56,11 @@ class AnimeController {
             const existingAnime = await Anime.findOne({ where: { title } });
 
             if (existingAnime) {
-                return res.status(400).json({ message: "Anime déjà existant" });
+                return res.status(400).json({ errors: { title: "L'anime existe deja" } });
             }
 
             if (!req.file) {
-                return res.status(400).json({ message: "Une image est obligatoire" });
+                return res.status(400).json({ errors: { image: "Une image est obligatoire" } });
             }
 
             const anime = await Anime.create({ ...req.body, image: req.file.path });

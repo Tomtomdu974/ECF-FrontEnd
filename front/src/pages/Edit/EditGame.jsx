@@ -15,9 +15,7 @@ const EditGame = () => {
     const handleUpdate = async (formData) => {
         const data = await updateGame(id, formData);
 
-        if (!data?.error) {
-            navigate(`/game/${data.id}`);
-        }
+        navigate(`/game/${data.id}`);
 
         return data;
     };

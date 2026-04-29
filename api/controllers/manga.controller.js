@@ -35,7 +35,7 @@ class MangaController {
         try {
             const { id } = req.params;
             const manga = await Manga.findByPk(id, {
-                include: [ Category, Gender ]
+                include: [Category, Gender]
             })
 
             if (!manga) {
@@ -56,11 +56,11 @@ class MangaController {
             const existingManga = await Manga.findOne({ where: { title } });
 
             if (existingManga) {
-                return res.status(400).json({ message: "Le manga existe deja" });
+                return res.status(400).json({ errors: { title: "Le manga existe deja" } });
             }
 
             if (!req.file) {
-                return res.status(400).json({ message: "Une image est obligatoire" });
+                return res.status(400).json({ errors: { image: "Une image est obligatoire" } });
             }
 
             const manga = await Manga.create({ ...req.body, image: req.file.path });

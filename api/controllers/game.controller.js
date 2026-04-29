@@ -56,11 +56,11 @@ class GameController {
             const existingGame = await Game.findOne({ where: { title } });
 
             if (existingGame) {
-                return res.status(400).json({ message: "Le jeu existe deja" });
+                return res.status(400).json({ errors: { title: "Le jeux existe deja" } });
             }
 
             if (!req.file) {
-                return res.status(400).json({ message: "Une image est obligatoire" });
+                return res.status(400).json({ errors: { image: "Une image est obligatoire" } });
             }
 
             const game = await Game.create({ ...req.body, image: req.file.path });

@@ -15,9 +15,7 @@ const EditManga = () => {
     const handleUpdate = async (formData) => {
         const data = await updateManga(id, formData);
 
-        if (!data?.error) {
-            navigate(`/manga/${data.id}`);
-        }
+        navigate(`/manga/${data.id}`);
 
         return data;
     };
