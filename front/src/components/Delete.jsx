@@ -21,7 +21,7 @@ const Delete = ({id, type, onDeleted}) => {
         }
     };
 
-    return <button onClick={handleDelete}>Supprimer</button>;
+    return <button className="detail-btn delete-btn" onClick={handleDelete}>Supprimer</button>;
 }
 
 export default Delete
