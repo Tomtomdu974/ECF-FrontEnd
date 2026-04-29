@@ -11,7 +11,7 @@ const validateGame = [
     body('release_year')
         .trim()
         .notEmpty()
-        .isInt({ min: 1960, max: new Date().getFullYear() })
+        .isDate()
         .withMessage('La date de sortie est obligatoire'),
     body('author')
         .trim()
@@ -22,10 +22,6 @@ const validateGame = [
         .trim()
         .notEmpty()
         .withMessage('La description est obligatoire'),
-    body('image')
-        .trim()
-        .notEmpty()
-        .withMessage('L\'image est obligatoire'),
     body('CategoryId')
         .trim()
         .notEmpty()

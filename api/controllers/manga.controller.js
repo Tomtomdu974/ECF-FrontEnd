@@ -87,7 +87,7 @@ class MangaController {
             res.json(manga);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: "Une erreur s'est produite" });
+            res.status(500).json({ message: "Une erreur s'est produite", detail: error.message });
         }
     }
 
