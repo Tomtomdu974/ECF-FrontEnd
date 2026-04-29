@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import { fecthGames, deleteGame } from "../api/game";
-import { fetchMangas, deleteManga } from "../api/manga";
-import { fetchAnimes, deleteAnime } from "../api/anime";
+import { fecthGames } from "../api/game";
+import { fetchMangas } from "../api/manga";
+import { fetchAnimes } from "../api/anime";
 import { fetchCategories } from "../api/category";
 import { fetchGenres } from "../api/genre";
+import { useFavorite } from "../contexts/FavoritesContext";
+import Delete from "../components/Delete";
 import '../styles/Catalogue.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -18,27 +20,22 @@ const Catalogue = () => {
     const [category, setCategory] = useState('');
     const [mangas, setMangas] = useState([]);
     const [animes, setAnimes] = useState([]);
+    const { isFavorite, toggleFavorite } = useFavorite();
 
-    const removeGame = async (id) => {
-        await deleteGame(id);
-
+    const refreshGames = async () => {
         const data = await fecthGames(search, selectedGenre, category);
         setGames(data);
-    }
+    };
 
-    const removeManga = async (id) => {
-        await deleteManga(id);
-
-        const data = await fetchMangas(search);
+    const refreshMangas = async () => {
+        const data = await fetchMangas(search, selectedGenre, category);
         setMangas(data);
-    }
+    };
 
-    const removeAnime = async (id) => {
-        await deleteAnime(id);
-
-        const data = await fetchAnimes(search);
+    const refreshAnimes = async () => {
+        const data = await fetchAnimes(search, selectedGenre, category);
         setAnimes(data);
-    }
+    };
 
     useEffect(() => {
         fetchMangas(search, selectedGenre, category).then(data => setMangas(data));
@@ -128,7 +125,10 @@ const Catalogue = () => {
                                         </div>
                                         <footer className="media-card__actions">
                                             <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>
-                                            <button onClick={() => removeManga(manga.id)}>Supprimer</button>
+                                            <button onClick={() => toggleFavorite({ ...manga, type: "manga" })}>
+                                                {isFavorite(manga.id, "manga") ? "Retirer des favoris" : "Ajouter au favoris"}
+                                            </button>
+                                            <Delete id={manga.id} type="manga" onDeleted={refreshMangas} />
                                         </footer>
                                     </article>
                                 </li>
@@ -158,7 +158,10 @@ const Catalogue = () => {
                                         </div>
                                         <footer className="media-card__actions">
                                             <Link to={`/edit/anime/${anime.id}`}>Modifier</Link>
-                                            <button onClick={() => removeAnime(anime.id)}>Supprimer</button>
+                                            <button onClick={() => toggleFavorite({ ...anime, type: "anime" })}>
+                                                {isFavorite(anime.id, "anime") ? "Retirer des favoris" : "Ajouter au favoris"}
+                                            </button>
+                                            <Delete id={anime.id} type="manga" onDeleted={refreshAnimes} />
                                         </footer>
                                     </article>
                                 </li>
@@ -188,7 +191,10 @@ const Catalogue = () => {
                                         </div>
                                         <footer className="media-card__actions">
                                             <Link to={`/edit/game/${game.id}`}>Modifier</Link>
-                                            <button onClick={() => removeGame(game.id)}>Supprimer</button>
+                                            <button onClick={() => toggleFavorite({ ...game, type: "game" })}>
+                                                {isFavorite(game.id, "game") ? "Retirer des favoris" : "Ajouter au favoris"}
+                                            </button>
+                                            <Delete id={game.id} type="game" onDeleted={refreshGames} />
                                         </footer>
                                     </article>
                                 </li>

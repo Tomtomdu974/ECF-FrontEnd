@@ -1,0 +1,119 @@
+.form-container {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.form-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #facc15;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #facc15;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #facc15;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-group select option {
+    background: #1e293b;
+    color: #fff;
+}
+
+.form-group input[type="file"] {
+    cursor: pointer;
+    padding: 0.6rem 1rem;
+}
+
+.form-group input[type="file"]::file-selector-button {
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background: #facc15;
+    color: #1e293b;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 1rem;
+    transition: background 0.2s ease;
+}
+
+.form-group input[type="file"]::file-selector-button:hover {
+    background: #f59e0b;
+}
+
+.form-error {
+    font-size: 0.8rem;
+    color: #f87171;
+    margin-top: 0.2rem;
+}
+
+.form-submit {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f7b801 0%, #f35b04 100%);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(243, 91, 4, 0.4);
+}
+
+@media (max-width: 640px) {
+    .form-container {
+        margin: 1.5rem 1rem;
+        padding: 1.5rem;
+    }
+}
