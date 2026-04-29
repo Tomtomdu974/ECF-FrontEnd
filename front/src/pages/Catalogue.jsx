@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import { fecthGames, deleteGame } from "../api/game";
-import { fetchMangas, deleteManga } from "../api/manga";
-import { fetchAnimes, deleteAnime } from "../api/anime";
+import { fecthGames } from "../api/game";
+import { fetchMangas } from "../api/manga";
+import { fetchAnimes } from "../api/anime";
 import { fetchCategories } from "../api/category";
 import { fetchGenres } from "../api/genre";
+import { useFavorite } from "../contexts/FavoritesContext";
+import Delete from "../components/Delete";
 import '../styles/Catalogue.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -18,27 +20,41 @@ const Catalogue = () => {
     const [category, setCategory] = useState('');
     const [mangas, setMangas] = useState([]);
     const [animes, setAnimes] = useState([]);
+    const { isFavorite, toggleFavorite } = useFavorite();
+    const [sortBy, setSortBy] = useState("title-asc");
 
-    const removeGame = async (id) => {
-        await deleteGame(id);
-
+    const refreshGames = async () => {
         const data = await fecthGames(search, selectedGenre, category);
         setGames(data);
-    }
+    };
 
-    const removeManga = async (id) => {
-        await deleteManga(id);
-
-        const data = await fetchMangas(search);
+    const refreshMangas = async () => {
+        const data = await fetchMangas(search, selectedGenre, category);
         setMangas(data);
-    }
+    };
 
-    const removeAnime = async (id) => {
-        await deleteAnime(id);
-
-        const data = await fetchAnimes(search);
+    const refreshAnimes = async () => {
+        const data = await fetchAnimes(search, selectedGenre, category);
         setAnimes(data);
-    }
+    };
+
+    const sortMedia = (items) => {
+        if (!Array.isArray(items)) return [];
+
+        return [...items].sort((a, b) => {
+            switch (sortBy) {
+                case "title-desc":
+                    return b.title.localeCompare(a.title);
+                case "year-asc":
+                    return (a.release_year || "").localeCompare(b.release_year || "");
+                case "year-desc":
+                    return (b.release_year || "").localeCompare(a.release_year || "");
+                case "title-asc":
+                default:
+                    return a.title.localeCompare(b.title);
+            }
+        });
+    };
 
     useEffect(() => {
         fetchMangas(search, selectedGenre, category).then(data => setMangas(data));
@@ -80,13 +96,25 @@ const Catalogue = () => {
                     </form>
 
                     <div className="gender-filters">
-                        <label>Genre</label>
-                        <select id="genre-filter" onChange={(e) => setSelectedGenre(e.target.value)}>
-                            <option value="">Tous</option>
-                            {genres.map((genre) => (
-                                <option key={genre.id} value={genre.id}>{genre.name}</option>
-                            ))}
-                        </select>
+                        <label>Genre
+                            <select id="genre-filter" onChange={(e) => setSelectedGenre(e.target.value)}>
+                                <option value="">Tous</option>
+                                {genres.map((genre) => (
+                                    <option key={genre.id} value={genre.id}>{genre.name}</option>
+                                ))}
+                            </select>
+                        </label>
+                    </div>
+
+                    <div className="sort-filters">
+                        <label>Trier par
+                            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                                <option value="title-asc">Titre A → Z</option>
+                                <option value="title-desc">Titre Z → A</option>
+                                <option value="year-asc">Date ↑</option>
+                                <option value="year-desc">Date ↓</option>
+                            </select>
+                        </label>
                     </div>
                 </div>
 
@@ -108,13 +136,15 @@ const Catalogue = () => {
             </header>
 
             {/* Section Mangas */}
-            {(!category || categories.find(c => c.id == category)?.name === 'Manga') && (
-                <section className="media-section">
-                    <h2 id="manga-heading">Manga</h2>
-                    <ul className="media-list">
-                        {Array.isArray(mangas) && mangas
-                            .sort((a, b) => a.title.localeCompare(b.title))
-                            .map((manga) => (
+            {
+                (!category || categories.find(c => c.id == category)?.name === 'Manga') && (
+                    <section className="media-section">
+                        <div className="media-card__actions">
+                            <h2 id="manga-heading">Manga</h2>
+                            <Link to='/add/manga'>Ajouter un Manga</Link>
+                        </div>
+                        <ul className="media-list">
+                            {Array.isArray(mangas) && sortMedia(mangas).map((manga) => (
                                 <li key={manga.id}>
                                     <article className="media-card">
                                         <h3 className="media-card__title">
@@ -128,23 +158,29 @@ const Catalogue = () => {
                                         </div>
                                         <footer className="media-card__actions">
                                             <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>
-                                            <button onClick={() => removeManga(manga.id)}>Supprimer</button>
+                                            <button onClick={() => toggleFavorite({ ...manga, type: "manga" })}>
+                                                {isFavorite(manga.id, "manga") ? "Retirer des favoris" : "Ajouter au favoris"}
+                                            </button>
+                                            <Delete id={manga.id} type="manga" onDeleted={refreshMangas} />
                                         </footer>
                                     </article>
                                 </li>
                             ))}
-                    </ul>
-                </section>
-            )}
+                        </ul>
+                    </section>
+                )
+            }
 
             {/* Section Animes */}
-            {(!category || categories.find(c => c.id == category)?.name === 'Anime') && (
-                <section className="media-section">
-                    <h2 id="anime-heading">Animes</h2>
-                    <ul className="media-list">
-                        {Array.isArray(animes) && animes
-                            .sort((a, b) => a.title.localeCompare(b.title))
-                            .map((anime) => (
+            {
+                (!category || categories.find(c => c.id == category)?.name === 'Anime') && (
+                    <section className="media-section">
+                        <div className="media-card__actions">
+                            <h2 id="anime-heading">Animes</h2>
+                            <Link to='/add/anime'>Ajouter un Anime</Link>
+                        </div>
+                        <ul className="media-list">
+                            {Array.isArray(animes) && sortMedia(animes).map((anime) => (
                                 <li key={anime.id}>
                                     <article className="media-card">
                                         <h3 className="media-card__title">
@@ -158,23 +194,29 @@ const Catalogue = () => {
                                         </div>
                                         <footer className="media-card__actions">
                                             <Link to={`/edit/anime/${anime.id}`}>Modifier</Link>
-                                            <button onClick={() => removeAnime(anime.id)}>Supprimer</button>
+                                            <button onClick={() => toggleFavorite({ ...anime, type: "anime" })}>
+                                                {isFavorite(anime.id, "anime") ? "Retirer des favoris" : "Ajouter au favoris"}
+                                            </button>
+                                            <Delete id={anime.id} type="anime" onDeleted={refreshAnimes} />
                                         </footer>
                                     </article>
                                 </li>
                             ))}
-                    </ul>
-                </section>
-            )}
+                        </ul>
+                    </section>
+                )
+            }
 
             {/* Section Jeux vidéos */}
-            {(!category || categories.find(c => c.id == category)?.name === 'Jeux videos') && (
-                <section className="media-section">
-                    <h2 id="games-heading">Jeux vidéos</h2>
-                    <ul className="media-list">
-                        {Array.isArray(games) && games
-                            .sort((a, b) => a.title.localeCompare(b.title))
-                            .map((game) => (
+            {
+                (!category || categories.find(c => c.id == category)?.name === 'Jeux videos') && (
+                    <section className="media-section">
+                        <div className="media-card__actions">
+                            <h2 id="games-heading">Jeux vidéos</h2>
+                            <Link to='/add/game'>Ajouter un Jeux Vidéo</Link>
+                        </div>
+                        <ul className="media-list">
+                            {Array.isArray(games) && sortMedia(games).map((game) => (
                                 <li key={game.id}>
                                     <article className="media-card">
                                         <h3 className="media-card__title">
@@ -188,15 +230,19 @@ const Catalogue = () => {
                                         </div>
                                         <footer className="media-card__actions">
                                             <Link to={`/edit/game/${game.id}`}>Modifier</Link>
-                                            <button onClick={() => removeGame(game.id)}>Supprimer</button>
+                                            <button onClick={() => toggleFavorite({ ...game, type: "game" })}>
+                                                {isFavorite(game.id, "game") ? "Retirer des favoris" : "Ajouter au favoris"}
+                                            </button>
+                                            <Delete id={game.id} type="game" onDeleted={refreshGames} />
                                         </footer>
                                     </article>
                                 </li>
                             ))}
-                    </ul>
-                </section>
-            )}
-        </main>
+                        </ul>
+                    </section>
+                )
+            }
+        </main >
     );
 };
 
