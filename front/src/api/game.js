@@ -31,16 +31,6 @@ export const fetchGameById = async (id) => {
     return data;
 }
 
-export const updateGame = async (id, formData) => {
-    const response = await fetch(`${ENDPOINT}/${id}`, {
-        method: "PUT",
-        body: formData
-    })
-    const data = await response.json();
-
-    return data
-}
-
 export const createGame = async (game) => {
     const response = await fetch(`${ENDPOINT}`, {
         method: "POST",
@@ -49,7 +39,27 @@ export const createGame = async (game) => {
         body: game
     })
 
-    return await response.json();
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw data;
+    }
+
+    return data;
+}
+
+export const updateGame = async (id, formData) => {
+    const response = await fetch(`${ENDPOINT}/${id}`, {
+        method: "PUT",
+        body: formData
+    })
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw data;
+    }
+
+    return data
 }
 
 export const deleteGame = async (id) => {

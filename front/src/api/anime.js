@@ -42,6 +42,10 @@ export const createAnime = async (anime) => {
 
     const data = await response.json();
 
+    if (!response.ok) {
+        throw data;
+    }
+
     return data;
 }
 
@@ -51,6 +55,10 @@ export const updateAnime = async (id, formData) => {
         body: formData
     })
     const data = await response.json();
+
+    if (!response.ok) {
+        throw data;
+    }
 
     return data
 }
