@@ -10,15 +10,21 @@ const Form = ({
     onSubmit,
     submitLabel
 }) => {
-
     const [categories, setCategories] = useState([]);
     const [genres, setGenres] = useState([]);
     const [error, setError] = useState({});
-
+    const [categoryId, setCategoryId] = useState("");
+    const [genderId, setGenderId] = useState("");
+    
     useEffect(() => {
         fetchCategories().then((data) => setCategories(data));
         fetchGenres().then((data) => setGenres(data));
     }, []);
+
+    useEffect(() => {
+        setCategoryId(String(initialData?.CategoryId ?? ""));
+        setGenderId(String(initialData?.GenderId ?? ""));
+    }, [initialData]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -93,11 +99,12 @@ const Form = ({
                     <select
                         id="CategoryId"
                         name="CategoryId"
-                        defaultValue={initialData?.CategoryId || ""}
+                        value={categoryId}
+                        onChange={(e) => setCategoryId(e.target.value)}
                     >
                         <option value="">-- Choisir une catégorie --</option>
                         {categories.map((category) => (
-                            <option key={category.id} value={category.id}>
+                            <option key={category.id} value={String(category.id)}>
                                 {category.name}
                             </option>
                         ))}
@@ -107,10 +114,15 @@ const Form = ({
 
                 <div className="form-group">
                     <label htmlFor="GenderId">Genre</label>
-                    <select id="GenderId" name="GenderId" defaultValue={initialData?.GenderId || ""}>
+                    <select
+                        id="GenderId"
+                        name="GenderId"
+                        value={genderId}
+                        onChange={(e) => setGenderId(e.target.value)}
+                    >
                         <option value="">-- Choisir un genre --</option>
                         {genres.map((genre) => (
-                            <option key={genre.id} value={genre.id}>
+                            <option key={genre.id} value={String(genre.id)}>
                                 {genre.name}
                             </option>
                         ))}
