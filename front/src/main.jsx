@@ -1,9 +1,15 @@
 import { createRoot } from 'react-dom/client'
-import { FavoritesProvider } from './contexts/FavoritesContext.jsx'
 import App from './App.jsx'
+import { FavoritesProvider } from './contexts/FavoritesContext.jsx'
+import { AuthProvider } from './contexts/AuthContext.jsx'
+import { BrowserRouter } from 'react-router'
 
 createRoot(document.getElementById('root')).render(
-    <FavoritesProvider>
-        <App />
-    </FavoritesProvider>
+    <BrowserRouter>
+        <AuthProvider>
+            <FavoritesProvider>
+                <App />
+            </FavoritesProvider>
+        </AuthProvider>
+    </BrowserRouter>
 )

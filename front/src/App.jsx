@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router'
+import { Routes, Route } from 'react-router'
 import './styles/App.css'
 import './styles/Card.css'
 import Home from './pages/Home'
@@ -13,6 +13,7 @@ import EditManga from './pages/Edit/EditManga'
 import EditGame from './pages/Edit/EditGame'
 import EditAnime from './pages/Edit/EditAnime'
 import Favorites from './pages/Favorites'
+import Login from './pages/Login'
 
 import Header from './layouts/Header'
 import Footer from './layouts/Footer'
@@ -20,7 +21,7 @@ import Footer from './layouts/Footer'
 function App() {
 
   return (
-    <BrowserRouter>
+    <>
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -35,9 +36,10 @@ function App() {
         <Route path='/edit/game/:id' element={<EditGame />} />
         <Route path='/edit/anime/:id' element={<EditAnime />} />
         <Route path='/favorites' element={<Favorites />} />
+        <Route path='/login' element={<Login />} />
       </Routes>
       <Footer />
-    </BrowserRouter>
+    </>
   )
 }
 

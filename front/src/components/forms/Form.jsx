@@ -15,13 +15,14 @@ const Form = ({
     const [error, setError] = useState({});
     const [categoryId, setCategoryId] = useState("");
     const [genderId, setGenderId] = useState("");
-    
+
     useEffect(() => {
         fetchCategories().then((data) => setCategories(data));
         fetchGenres().then((data) => setGenres(data));
     }, []);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setCategoryId(String(initialData?.CategoryId ?? ""));
         setGenderId(String(initialData?.GenderId ?? ""));
     }, [initialData]);
