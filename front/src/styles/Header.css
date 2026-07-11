@@ -19,4 +19,21 @@
         h2 {
             color: #fff;
         }
+
+        p {
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        button:hover {
+            text-decoration: underline;
+        }
 }

@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { User } from '../models/index.js';
 
 const verifyToken = async (req, res, next) => {
-    const token = req.cookies;
+    const token = req.cookies?.token;
 
     if (!token) {
         return res.status(403).json({ message: 'Aucun token trouvé' });
@@ -10,7 +10,7 @@ const verifyToken = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findByPk(decoded.userId, {
+        const user = await User.findByPk(decoded.id, {
             attributes: { exclude: ['password'] }
         });
 

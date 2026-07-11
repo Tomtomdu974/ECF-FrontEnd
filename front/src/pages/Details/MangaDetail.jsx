@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router';
 import { fetchMangaById } from '../../api/manga';
 import { useFavorite } from "../../contexts/FavoritesContext";
+import { useAuth } from '../../contexts/AuthContext';
 import Delete from '../../components/Delete';
 import '../../styles/Details.css';
 
@@ -12,6 +13,7 @@ const MangaDetail = () => {
     const [manga, setManga] = useState({});
     const navigate = useNavigate();
     const { isFavorite, toggleFavorite } = useFavorite();
+    const { user } = useAuth();
 
     useEffect(() => {
         fetchMangaById(id).then(data => setManga(data));
@@ -38,20 +40,20 @@ const MangaDetail = () => {
                     </div>
 
                     <div className="detail-actions">
-                        <Link to={`/edit/manga/${manga.id}`} className="detail-btn edit-btn">
+                        {user && <Link to={`/edit/manga/${manga.id}`} className="detail-btn edit-btn">
                             Modifier
-                        </Link>
+                        </Link>}
 
-                        <button className="detail-btn favorite-btn" onClick={() => toggleFavorite({ ...manga, type: "manga" })}>
+                        {user && <button className="detail-btn favorite-btn" onClick={() => toggleFavorite({ ...manga, type: "manga" })}>
                             {isFavorite(manga.id, "manga") ? "Retirer des favoris" : "Ajouter au favoris"}
-                        </button>
+                        </button>}
 
-                        <Delete
+                        {user && <Delete
                             id={manga.id}
                             type="manga"
                             className="detail-btn delete-btn"
                             onDeleted={() => navigate("/catalogue")}
-                        />
+                        />}
                     </div>
                     <Link to={'/catalogue'} className="detail-btn back-btn">Retour au catalogue</Link>
                 </div>

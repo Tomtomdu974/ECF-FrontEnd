@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { fetchGameById } from "../../api/game";
 import { useFavorite } from "../../contexts/FavoritesContext";
+import { useAuth } from '../../contexts/AuthContext';
 import '../../styles/Details.css';
 import Delete from "../../components/Delete";
 
@@ -11,6 +12,7 @@ const GameDetail = () => {
     const [game, setGame] = useState({});
     const navigate = useNavigate();
     const { isFavorite, toggleFavorite } = useFavorite();
+    const { user } = useAuth();
 
     useEffect(() => {
         fetchGameById(id).then(data => setGame(data));
@@ -37,20 +39,20 @@ const GameDetail = () => {
                     </div>
 
                     <div className="detail-actions">
-                        <Link to={`/edit/game/${game.id}`} className="detail-btn edit-btn">
+                        {user && <Link to={`/edit/game/${game.id}`} className="detail-btn edit-btn">
                             Modifier
-                        </Link>
+                        </Link>}
 
-                        <button className="detail-btn favorite-btn" onClick={() => toggleFavorite({ ...game, type: "game" })}>
+                        {user && <button className="detail-btn favorite-btn" onClick={() => toggleFavorite({ ...game, type: "game" })}>
                             {isFavorite(game.id, "game") ? "Retirer des favoris" : "Ajouter au favoris"}
-                        </button>
+                        </button>}
 
-                        <Delete
+                        {user && <Delete
                             id={game.id}
                             type="game"
                             className="detail-btn delete-btn"
                             onDeleted={() => navigate("/catalogue")}
-                        />
+                        />}
                     </div>
                     <Link to={'/catalogue'} className="detail-btn back-btn">Retour au catalogue</Link>
                 </div>

@@ -50,12 +50,13 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         await fetch(`${API_URL}/users/logout`, {
+            method: "POST",
             credentials: "include"
         });
 
         setUser(null);
 
-        navigate('/login')
+        navigate('/')
     }
 
     useEffect(() => {

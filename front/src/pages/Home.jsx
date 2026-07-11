@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import { fecthGames, deleteGame } from "../api/game";
-import { fetchMangas, deleteManga } from "../api/manga";
-import { fetchAnimes, deleteAnime } from "../api/anime";
+import { fecthGames } from "../api/game";
+import { fetchMangas } from "../api/manga";
+import { fetchAnimes } from "../api/anime";
 import { useFavorite } from "../contexts/FavoritesContext";
+import { useAuth } from '../contexts/AuthContext';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -13,27 +14,7 @@ const Home = () => {
     const [mangas, setMangas] = useState([]);
     const [animes, setAnimes] = useState([]);
     const { isFavorite, toggleFavorite } = useFavorite();
-
-    const removeGame = async (id) => {
-        await deleteGame(id);
-
-        const data = await fecthGames(search);
-        setGames(data);
-    }
-
-    const removeManga = async (id) => {
-        await deleteManga(id);
-
-        const data = await fetchMangas(search);
-        setMangas(data);
-    }
-
-    const removeAnime = async (id) => {
-        await deleteAnime(id);
-
-        const data = await fetchAnimes(search);
-        setAnimes(data);
-    }
+    const { user } = useAuth();
 
     useEffect(() => {
         fetchMangas(search).then(data => setMangas(data));
@@ -62,7 +43,7 @@ const Home = () => {
             <section className="media-section" aria-labelledby="manga-heading">
                 <div className="media-card__actions">
                     <h2 id="manga-heading">Manga ajout récent</h2>
-                    <Link to='/add/manga'>Ajouter un Manga</Link>
+                    {user && <Link to='/add/manga'>Ajouter un Manga</Link>}
                 </div>
                 <ul className="media-list">
                     {Array.isArray(mangas) && mangas
@@ -86,11 +67,10 @@ const Home = () => {
                                     </div>
 
                                     <footer className="media-card__actions">
-                                        <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>
-                                        <button onClick={() => toggleFavorite({ ...manga, type: "manga" })}>
+                                        {user && <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>}
+                                        {user && <button onClick={() => toggleFavorite({ ...manga, type: "manga" })}>
                                             {isFavorite(manga.id, "manga") ? "Retirer des favoris" : "Ajouter au favoris"}
-                                        </button>
-                                        <button onClick={() => removeManga(manga.id)}>Supprimer</button>
+                                        </button>}
                                     </footer>
                                 </article>
                             </li>
@@ -102,7 +82,7 @@ const Home = () => {
             <section className="media-section" aria-labelledby="anime-heading">
                 <div className="media-card__actions">
                     <h2 id="anime-heading">Animes ajout récent</h2>
-                    <Link to='/add/anime'>Ajouter un Anime</Link>
+                    {user && <Link to='/add/anime'>Ajouter un Anime</Link>}
                 </div>
                 <ul className="media-list">
                     {Array.isArray(animes) && animes
@@ -121,11 +101,10 @@ const Home = () => {
                                         <p className="media-card__description">{anime.description}</p>
                                     </div>
                                     <footer className="media-card__actions">
-                                        <Link to={`/edit/anime/${anime.id}`}>Modifier</Link>
-                                        <button onClick={() => toggleFavorite({ ...anime, type: "anime" })}>
+                                        {user && <Link to={`/edit/anime/${anime.id}`}>Modifier</Link>}
+                                        {user && <button onClick={() => toggleFavorite({ ...anime, type: "anime" })}>
                                             {isFavorite(anime.id, "anime") ? "Retirer des favoris" : "Ajouter au favoris"}
-                                        </button>
-                                        <button onClick={() => removeAnime(anime.id)}>Supprimer</button>
+                                        </button>}
                                     </footer>
                                 </article>
                             </li>
@@ -137,7 +116,7 @@ const Home = () => {
             <section className="media-section" aria-labelledby="games-heading">
                 <div className="media-card__actions">
                     <h2 id="games-heading">Jeux vidéos ajout récent</h2>
-                    <Link to='/add/game'>Ajouter un Jeux Vidéo</Link>
+                    {user && <Link to='/add/game'>Ajouter un Jeux Vidéo</Link>}
                 </div>
                 <ul className="media-list">
                     {Array.isArray(games) && games
@@ -156,11 +135,10 @@ const Home = () => {
                                         <p className="media-card__description">{game.description}</p>
                                     </div>
                                     <footer className="media-card__actions">
-                                        <Link to={`/edit/game/${game.id}`}>Modifier</Link>
-                                        <button onClick={() => toggleFavorite({ ...game, type: "game" })}>
+                                        {user && <Link to={`/edit/game/${game.id}`}>Modifier</Link>}
+                                        {user && <button onClick={() => toggleFavorite({ ...game, type: "game" })}>
                                             {isFavorite(game.id, "game") ? "Retirer des favoris" : "Ajouter au favoris"}
-                                        </button>
-                                        <button onClick={() => removeGame(game.id)}>Supprimer</button>
+                                        </button>}
                                     </footer>
                                 </article>
                             </li>
