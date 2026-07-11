@@ -14,9 +14,14 @@ import EditGame from './pages/Edit/EditGame'
 import EditAnime from './pages/Edit/EditAnime'
 import Favorites from './pages/Favorites'
 import Login from './pages/Login'
+import Register from './pages/Register'
 
 import Header from './layouts/Header'
 import Footer from './layouts/Footer'
+
+// Protection des routes
+import Protected from './route/Protected'
+import PublicOnlyRoute from './route/PublicOnlyRoute'
 
 function App() {
 
@@ -24,20 +29,32 @@ function App() {
     <>
       <Header />
       <Routes>
+
+        {/* Routes accessibles à tous */}
         <Route path='/' element={<Home />} />
         <Route path='/manga/:id' element={<MangaDetail />} />
         <Route path='/anime/:id' element={<AnimeDetail />} />
         <Route path='/game/:id' element={<GameDetail />} />
         <Route path='/catalogue' element={<Catalogue />} />
-        <Route path='/add/manga' element={<AddManga />} />
-        <Route path='/add/anime' element={<AddAnime />} />
-        <Route path='/add/game' element={<AddGame />} />
-        <Route path='/edit/manga/:id' element={<EditManga />} />
-        <Route path='/edit/game/:id' element={<EditGame />} />
-        <Route path='/edit/anime/:id' element={<EditAnime />} />
-        <Route path='/favorites' element={<Favorites />} />
-        <Route path='/login' element={<Login />} />
+
+        {/* Routes accessible uniquement quand on est connecté */}
+        <Route element={<Protected />}>
+          <Route path='/add/manga' element={<AddManga />} />
+          <Route path='/add/anime' element={<AddAnime />} />
+          <Route path='/add/game' element={<AddGame />} />
+          <Route path='/edit/manga/:id' element={<EditManga />} />
+          <Route path='/edit/game/:id' element={<EditGame />} />
+          <Route path='/edit/anime/:id' element={<EditAnime />} />
+          <Route path='/favorites' element={<Favorites />} />
+        </Route>
+
+        {/* Routes accessible uniquement quand on est déconnecté */}
+        <Route element={<PublicOnlyRoute />}>
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+        </Route>
       </Routes>
+
       <Footer />
     </>
   )
