@@ -10,7 +10,7 @@ const verifyToken = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findById(decoded.userId, {
+        const user = await User.findByPk(decoded.userId, {
             attributes: { exclude: ['password'] }
         });
 
@@ -26,14 +26,15 @@ const verifyToken = async (req, res, next) => {
         res.status(500).json(error)
     }
 
-    const isAdmin = async (req, res, next) => {
-        const { user } = req;
+}
 
-        if (user.role !== 'admin') {
-            return res.status(403).json({ message: 'Vous n\'avez pas la permission d\'accéder à ce contenu' });
-        }
-        next();
+const isAdmin = async (req, res, next) => {
+    const { user } = req;
+
+    if (user.role !== 'admin') {
+        return res.status(403).json({ message: 'Vous n\'avez pas la permission d\'accéder à ce contenu' });
     }
+    next();
 }
 
 export { verifyToken, isAdmin };

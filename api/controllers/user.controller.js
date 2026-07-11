@@ -1,5 +1,6 @@
 import { User, Game, Manga, Anime } from "../models/index.js";
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 class UserController {
     getAll = async (req, res) => {
@@ -53,11 +54,70 @@ class UserController {
             const newUser = await User.create({ ...req.body, password: hashedPassword });
             const { password: _, ...userWithoutPassword } = newUser.toJSON();
 
+            const token = jwt.sign(
+                { id: newUser.id },
+                process.env.JWT_SECRET,
+                { expiresIn: "7d" }
+            );
+
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: false,
+                sameSite: 'lax',
+                maxAge: 7 * 24 * 60 * 60 * 1000
+            });
+
             res.json(userWithoutPassword);
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: "Une erreur s'est produite" });
         }
+    }
+
+    login = async (req, res) => {
+        try {
+            const { email, password } = req.body;
+
+            const user = await User.findOne({ where: { email } });
+
+            if (!user) {
+                return res.status(401).json({ message: "Email ou mot de passe incorrect" });
+            }
+
+            const isPasswordValid = await bcrypt.compare(password, user.password);
+
+            if (!isPasswordValid) {
+                return res.status(401).json({ message: "Email ou mot de passe incorrect" });
+            }
+
+            const token = jwt.sign(
+                { id: user.id },
+                process.env.JWT_SECRET,
+                { expiresIn: "7d" }
+            );
+
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: false, // à mettre à true en production (HTTPS)
+                sameSite: 'lax',
+                maxAge: 7 * 24 * 60 * 60 * 1000
+            });
+
+            const { password: _, ...userWithoutPassword } = user.toJSON();
+            res.json(userWithoutPassword);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Une erreur s'est produite" });
+        }
+    }
+
+    me = async (req, res) => {
+        res.json(req.user);
+    }
+
+    logout = async (req, res) => {
+        res.clearCookie('token');
+        res.json({ message: "Déconnecté" });
     }
 
     update = async (req, res) => {

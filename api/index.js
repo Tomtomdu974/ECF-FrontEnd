@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import userRoutes from './routes/user.js';
 import gameRoutes from './routes/game.js';
 import mangaRoutes from './routes/manga.js';
@@ -15,6 +16,7 @@ app.use(cors({
 }));
 
 app.use('/uploads', express.static('uploads'));
+app.use(cookieParser());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
