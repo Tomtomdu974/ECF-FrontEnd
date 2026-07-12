@@ -23,7 +23,7 @@ const verifyToken = async (req, res, next) => {
 
     } catch (error) {
         console.log(error)
-        res.status(500).json(error)
+        res.status(401).json({ message: 'Token invalide ou expiré' })
     }
 
 }
@@ -37,4 +37,14 @@ const isAdmin = async (req, res, next) => {
     next();
 }
 
-export { verifyToken, isAdmin };
+const isSelfOrAdmin = (req, res, next) => {
+    const { user } = req;
+    const targetId = Number(req.params.id);
+
+    if (user.id !== targetId && user.role !== 'admin') {
+        return res.status(403).json({ message: 'Vous n\'avez pas la permission de modifier ce compte' });
+    }
+    next();
+};
+
+export { verifyToken, isAdmin, isSelfOrAdmin };

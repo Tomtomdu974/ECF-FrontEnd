@@ -23,6 +23,11 @@ const User = db.define('User', {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
+    },
+    role: {
+        type: DataTypes.ENUM('user', 'admin'),
+        defaultValue: 'user',
+        allowNull: false
     }
 })
 

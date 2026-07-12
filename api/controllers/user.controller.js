@@ -93,7 +93,7 @@ class UserController {
             const token = jwt.sign(
                 { id: user.id },
                 process.env.JWT_SECRET,
-                { expiresIn: "7d" }
+                { expiresIn: "24h" }
             );
 
             res.cookie('token', token, {
@@ -124,8 +124,8 @@ class UserController {
         try {
             const { id } = req.params;
 
-            // On extrait le password du body pour ne pas le passer en clair
-            const { password, ...bodyWithoutPassword } = req.body;
+            // On extrait password et role du body pour les traiter à part
+            const { password, role, ...bodyWithoutSensitiveFields } = req.body;
 
             // On hashe le password seulement s'il est fourni
             let hashedPassword;
@@ -139,8 +139,14 @@ class UserController {
                 return res.status(404).json({ message: "Utilisateur non trouvé" });
             }
 
-            // On met à jour avec le body sans password + le password hashé si présent
-            const userUpdate = await user.update({ ...bodyWithoutPassword, ...(hashedPassword && { password: hashedPassword }) });
+            // Seul un admin peut modifier le role
+            const roleUpdate = req.user.role === 'admin' && role ? { role } : {};
+
+            const userUpdate = await user.update({
+                ...bodyWithoutSensitiveFields,
+                ...(hashedPassword && { password: hashedPassword }),
+                ...roleUpdate
+            });
 
             // On exclut le password de la réponse
             const { password: _, ...userWithoutPassword } = userUpdate.toJSON();
