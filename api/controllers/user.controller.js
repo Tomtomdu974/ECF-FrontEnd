@@ -51,7 +51,7 @@ class UserController {
             }
 
             const hashedPassword = await bcrypt.hash(password, 10);
-            const newUser = await User.create({ ...req.body, password: hashedPassword });
+            const newUser = await User.create({ firstName, lastName, email, userName, password: hashedPassword });
             const { password: _, ...userWithoutPassword } = newUser.toJSON();
 
             const token = jwt.sign(

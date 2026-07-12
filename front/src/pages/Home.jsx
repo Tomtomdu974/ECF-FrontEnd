@@ -43,7 +43,7 @@ const Home = () => {
             <section className="media-section" aria-labelledby="manga-heading">
                 <div className="media-card__actions">
                     <h2 id="manga-heading">Manga ajout récent</h2>
-                    {user && <Link to='/add/manga'>Ajouter un Manga</Link>}
+                    {user?.role ==='admin' && <Link to='/add/manga'>Ajouter un Manga</Link>}
                 </div>
                 <ul className="media-list">
                     {Array.isArray(mangas) && mangas
@@ -67,7 +67,7 @@ const Home = () => {
                                     </div>
 
                                     <footer className="media-card__actions">
-                                        {user && <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>}
+                                        {user?.role ==='admin'&& <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>}
                                         {user && <button onClick={() => toggleFavorite({ ...manga, type: "manga" })}>
                                             {isFavorite(manga.id, "manga") ? "Retirer des favoris" : "Ajouter au favoris"}
                                         </button>}
@@ -82,7 +82,7 @@ const Home = () => {
             <section className="media-section" aria-labelledby="anime-heading">
                 <div className="media-card__actions">
                     <h2 id="anime-heading">Animes ajout récent</h2>
-                    {user && <Link to='/add/anime'>Ajouter un Anime</Link>}
+                    {user?.role === 'admin' && <Link to='/add/anime'>Ajouter un Anime</Link>}
                 </div>
                 <ul className="media-list">
                     {Array.isArray(animes) && animes
@@ -101,7 +101,7 @@ const Home = () => {
                                         <p className="media-card__description">{anime.description}</p>
                                     </div>
                                     <footer className="media-card__actions">
-                                        {user && <Link to={`/edit/anime/${anime.id}`}>Modifier</Link>}
+                                        {user?.role === 'admin' && <Link to={`/edit/anime/${anime.id}`}>Modifier</Link>}
                                         {user && <button onClick={() => toggleFavorite({ ...anime, type: "anime" })}>
                                             {isFavorite(anime.id, "anime") ? "Retirer des favoris" : "Ajouter au favoris"}
                                         </button>}
@@ -116,7 +116,7 @@ const Home = () => {
             <section className="media-section" aria-labelledby="games-heading">
                 <div className="media-card__actions">
                     <h2 id="games-heading">Jeux vidéos ajout récent</h2>
-                    {user && <Link to='/add/game'>Ajouter un Jeux Vidéo</Link>}
+                    {user?.role === 'admin' && <Link to='/add/game'>Ajouter un Jeux Vidéo</Link>}
                 </div>
                 <ul className="media-list">
                     {Array.isArray(games) && games
@@ -135,7 +135,7 @@ const Home = () => {
                                         <p className="media-card__description">{game.description}</p>
                                     </div>
                                     <footer className="media-card__actions">
-                                        {user && <Link to={`/edit/game/${game.id}`}>Modifier</Link>}
+                                        {user?.role === 'admin' && <Link to={`/edit/game/${game.id}`}>Modifier</Link>}
                                         {user && <button onClick={() => toggleFavorite({ ...game, type: "game" })}>
                                             {isFavorite(game.id, "game") ? "Retirer des favoris" : "Ajouter au favoris"}
                                         </button>}

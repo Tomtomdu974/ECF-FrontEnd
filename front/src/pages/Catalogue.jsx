@@ -143,7 +143,7 @@ const Catalogue = () => {
                     <section className="media-section">
                         <div className="media-card__actions">
                             <h2 id="manga-heading">Manga</h2>
-                            {user && <Link to='/add/manga'>Ajouter un Manga</Link>}
+                            {user?.role === 'admin' && <Link to='/add/manga'>Ajouter un Manga</Link>}
                         </div>
                         <ul className="media-list">
                             {Array.isArray(mangas) && sortMedia(mangas).map((manga) => (
@@ -159,11 +159,11 @@ const Catalogue = () => {
                                             <p className="media-card__description">{manga.description}</p>
                                         </div>
                                         <footer className="media-card__actions">
-                                            {user && <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>}
+                                            {user?.role === 'admin' && <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>}
                                             {user && <button onClick={() => toggleFavorite({ ...manga, type: "manga" })}>
                                                 {isFavorite(manga.id, "manga") ? "Retirer des favoris" : "Ajouter au favoris"}
                                             </button>}
-                                            {user && <Delete id={manga.id} type="manga" onDeleted={refreshMangas} />}
+                                            {user?.role === 'admin' && <Delete id={manga.id} type="manga" onDeleted={refreshMangas} />}
                                         </footer>
                                     </article>
                                 </li>
@@ -179,7 +179,7 @@ const Catalogue = () => {
                     <section className="media-section">
                         <div className="media-card__actions">
                             <h2 id="anime-heading">Animes</h2>
-                            {user && <Link to='/add/anime'>Ajouter un Anime</Link>}
+                            {user?.role === 'admin' && <Link to='/add/anime'>Ajouter un Anime</Link>}
                         </div>
                         <ul className="media-list">
                             {Array.isArray(animes) && sortMedia(animes).map((anime) => (
@@ -195,11 +195,11 @@ const Catalogue = () => {
                                             <p className="media-card__description">{anime.description}</p>
                                         </div>
                                         <footer className="media-card__actions">
-                                            {user && <Link to={`/edit/anime/${anime.id}`}>Modifier</Link>}
+                                            {user?.role === 'admin' && <Link to={`/edit/anime/${anime.id}`}>Modifier</Link>}
                                             {user && <button onClick={() => toggleFavorite({ ...anime, type: "anime" })}>
                                                 {isFavorite(anime.id, "anime") ? "Retirer des favoris" : "Ajouter au favoris"}
                                             </button>}
-                                            {user && <Delete id={anime.id} type="anime" onDeleted={refreshAnimes} />}
+                                            {user?.role === 'admin' && <Delete id={anime.id} type="anime" onDeleted={refreshAnimes} />}
                                         </footer>
                                     </article>
                                 </li>
@@ -215,7 +215,7 @@ const Catalogue = () => {
                     <section className="media-section">
                         <div className="media-card__actions">
                             <h2 id="games-heading">Jeux vidéos</h2>
-                            {user && <Link to='/add/game'>Ajouter un Jeux Vidéo</Link>}
+                            {user?.role === 'admin' && <Link to='/add/game'>Ajouter un Jeux Vidéo</Link>}
                         </div>
                         <ul className="media-list">
                             {Array.isArray(games) && sortMedia(games).map((game) => (
@@ -231,11 +231,11 @@ const Catalogue = () => {
                                             <p className="media-card__description">{game.description}</p>
                                         </div>
                                         <footer className="media-card__actions">
-                                            {user && <Link to={`/edit/game/${game.id}`}>Modifier</Link>}
+                                            {user?.role === 'admin' && <Link to={`/edit/game/${game.id}`}>Modifier</Link>}
                                             {user && <button onClick={() => toggleFavorite({ ...game, type: "game" })}>
                                                 {isFavorite(game.id, "game") ? "Retirer des favoris" : "Ajouter au favoris"}
                                             </button>}
-                                            {user && <Delete id={game.id} type="game" onDeleted={refreshGames} />}
+                                            {user?.role === 'admin' && <Delete id={game.id} type="game" onDeleted={refreshGames} />}
                                         </footer>
                                     </article>
                                 </li>

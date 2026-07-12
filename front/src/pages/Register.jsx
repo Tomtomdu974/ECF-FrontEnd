@@ -34,9 +34,9 @@ const Register = () => {
     };
 
     return (
-        <div>
+        <div className="form-container">
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="form-group">
                     <label>Prénom:</label>
                     <input
                         type="text"
@@ -46,7 +46,7 @@ const Register = () => {
                         required
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Nom:</label>
                     <input
                         type="text"
@@ -57,7 +57,7 @@ const Register = () => {
                     />
                 </div>
 
-                <div>
+                <div className="form-group">
                     <label>Nom d'utilisateur:</label>
                     <input
                         type="text"
@@ -68,7 +68,7 @@ const Register = () => {
                     />
                 </div>
 
-                <div>
+                <div className="form-group">
                     <label>Adresse email:</label>
                     <input
                         type="email"
@@ -78,7 +78,7 @@ const Register = () => {
                         required
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Mot de passe:</label>
                     <input
                         type="password"
@@ -89,7 +89,7 @@ const Register = () => {
                     />
                 </div>
 
-                <div>
+                <div className="form-group">
                     <label>Confirmer le mot de passe:</label>
                     <input
                         type="password"
@@ -100,7 +100,7 @@ const Register = () => {
                     />
                 </div>
 
-                <button type="submit">S'inscrire</button>
+                <button type="submit" className="form-submit">S'inscrire</button>
             </form>
         </div>
     );

@@ -1,4 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
+const CRUNCHYROLL_URL = import.meta.env.VITE_CRUNCHYROLL_URL;
+const ADN_URL = import.meta.env.VITE_ADN_URL;
 import { useParams, Link, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { fetchAnimeById } from "../../api/anime";
@@ -39,7 +41,7 @@ const AnimeDetail = () => {
                     </div>
 
                     <div className="detail-actions">
-                        {user && <Link to={`/edit/anime/${anime.id}`} className="detail-btn edit-btn">
+                        {user?.role === 'admin' && <Link to={`/edit/anime/${anime.id}`} className="detail-btn edit-btn">
                             Modifier
                         </Link>}
 
@@ -47,7 +49,15 @@ const AnimeDetail = () => {
                             {isFavorite(anime.id, "anime") ? "Retirer des favoris" : "Ajouter au favoris"}
                         </button>}
 
-                        {user && <Delete
+                        {anime.title && <Link to={`${CRUNCHYROLL_URL}${encodeURIComponent(anime.title)}`} target="_blank" rel="noopener noreferrer" className="detail-btn edit-btn">
+                            Voir sur Crunchyroll
+                        </Link>}
+
+                        {anime.title && <Link to={`${ADN_URL}${encodeURIComponent(anime.title)}`} target="_blank" rel="noopener noreferrer" className="detail-btn edit-btn">
+                            Voir sur ADN
+                        </Link>}
+
+                        {user?.role === 'admin' && <Delete
                             id={anime.id}
                             type="anime"
                             className="detail-btn delete-btn"

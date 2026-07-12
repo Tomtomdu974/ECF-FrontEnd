@@ -1,9 +1,11 @@
 const API_URL = import.meta.env.VITE_API_URL;
+const SCAN_URL = import.meta.env.VITE_URL_MANGA_SCAN;
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router';
 import { fetchMangaById } from '../../api/manga';
 import { useFavorite } from "../../contexts/FavoritesContext";
 import { useAuth } from '../../contexts/AuthContext';
+import { slugify } from '../../utils/slugify';
 import Delete from '../../components/Delete';
 import '../../styles/Details.css';
 
@@ -40,7 +42,7 @@ const MangaDetail = () => {
                     </div>
 
                     <div className="detail-actions">
-                        {user && <Link to={`/edit/manga/${manga.id}`} className="detail-btn edit-btn">
+                        {user?.role === 'admin' && <Link to={`/edit/manga/${manga.id}`} className="detail-btn edit-btn">
                             Modifier
                         </Link>}
 
@@ -48,7 +50,9 @@ const MangaDetail = () => {
                             {isFavorite(manga.id, "manga") ? "Retirer des favoris" : "Ajouter au favoris"}
                         </button>}
 
-                        {user && <Delete
+                        {manga.title && <Link to={`${SCAN_URL}${slugify(manga.title)}`} target="_blank" rel="noopener noreferrer" className="detail-btn edit-btn">Lire le manga</Link>}
+
+                        {user?.role === 'admin' && <Delete
                             id={manga.id}
                             type="manga"
                             className="detail-btn delete-btn"
