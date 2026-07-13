@@ -1,0 +1,225 @@
+.admin-page {
+    min-height: 100vh;
+    padding: 3rem 1.5rem;
+    background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+    color: white;
+}
+
+.admin-page h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #facc15;
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.admin-grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.admin-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    text-decoration: none;
+    color: white;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.admin-card:hover {
+    transform: translateY(-4px);
+    border-color: #facc15;
+    box-shadow: 0 12px 30px rgba(250, 204, 21, 0.25);
+}
+
+.admin-card h2 {
+    font-size: 1.3rem;
+    color: #facc15;
+    margin: 0;
+}
+
+.admin-card p {
+    font-size: 0.9rem;
+    color: #e2e8f0;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.admin-inline-form {
+    max-width: 700px;
+    margin: 0 auto 0.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.admin-inline-form input {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.admin-inline-form input:focus {
+    border-color: #facc15;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.admin-inline-form .form-submit {
+    width: auto;
+    margin-top: 0;
+    padding: 0.85rem 1.6rem;
+}
+
+.admin-list {
+    max-width: 700px;
+    margin: 2rem auto 0;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.admin-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 1.25rem;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    font-size: 1rem;
+}
+
+.admin-list li .delete-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+}
+
+.admin-table {
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.75rem;
+}
+
+.admin-table thead th {
+    text-align: left;
+    padding: 0 1.25rem 0.5rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #facc15;
+}
+
+.admin-table tbody tr {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.admin-table tbody td {
+    padding: 1rem 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-table tbody td:first-child {
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px 0 0 14px;
+}
+
+.admin-table tbody td:last-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 14px 14px 0;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.admin-table select {
+    padding: 0.5rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.admin-table select option {
+    background: #1e293b;
+    color: #fff;
+}
+
+.admin-table select:disabled,
+.admin-table button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.admin-table .delete-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+}
+
+.admin-page .form-error {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 700px) {
+    .admin-inline-form {
+        flex-direction: column;
+    }
+
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-table thead {
+        display: none;
+    }
+
+    .admin-table,
+    .admin-table tbody,
+    .admin-table tr,
+    .admin-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .admin-table tbody tr {
+        border-radius: 14px;
+        padding: 0.5rem 0;
+        margin-bottom: 0.75rem;
+    }
+
+    .admin-table tbody td {
+        border: none;
+        padding: 0.5rem 1.25rem;
+    }
+
+    .admin-table tbody td:last-child {
+        border-radius: 0;
+        justify-content: flex-start;
+    }
+}

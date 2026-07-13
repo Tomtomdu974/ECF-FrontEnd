@@ -37,6 +37,7 @@ export const fetchAnimeById = async (id) => {
 export const createAnime = async (anime) => {
     const response = await fetch(`${ENDPOINT}`, {
         method: "POST",
+        credentials: 'include',
         body: anime
     })
 
@@ -52,6 +53,7 @@ export const createAnime = async (anime) => {
 export const updateAnime = async (id, formData) => {
     const response = await fetch(`${ENDPOINT}/${id}`, {
         method: "PUT",
+        credentials: 'include',
         body: formData
     })
     const data = await response.json();
@@ -65,6 +67,7 @@ export const updateAnime = async (id, formData) => {
 
 export const deleteAnime = async (id) => {
     await fetch(`${ENDPOINT}/${id}`, {
-        method: "DELETE"
+        method: "DELETE",
+        credentials: 'include'
     })
 }

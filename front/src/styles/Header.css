@@ -5,35 +5,112 @@
     padding: 0 20px;
     background-color: #1a8f68;
     height: 60px;
+    position: relative;
+}
 
-        a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.2rem;
-        }
+.header-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
 
-        a:hover {
-            text-decoration: underline;
-        }
+.header-nav a:hover {
+    text-decoration: underline;
+}
 
-        h2 {
-            color: #fff;
-        }
+.header-nav h2 {
+    color: #fff;
+    z-index: 20;
+}
 
-        p {
-            color: #fff;
-            font-size: 1.2rem;
-        }
+.header-nav p {
+    color: #fff;
+    font-size: 1.2rem;
+    margin: 0;
+}
 
-        button {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.2rem;
-            cursor: pointer;
-            font-family: inherit;
-        }
-        button:hover {
-            text-decoration: underline;
-        }
+.header-nav button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.header-nav button:hover {
+    text-decoration: underline;
+}
+
+/* Liens : rangée horizontale sur desktop */
+.header-links {
+    display: flex;
+    align-items: center;
+    gap: 7.5rem;
+}
+
+/* Bouton hamburger : caché sur desktop */
+.burger-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    z-index: 20;
+}
+
+.burger-btn span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.burger-btn.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.burger-btn.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-btn.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.header-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+}
+
+@media (max-width: 800px) {
+    .burger-btn {
+        display: flex;
+    }
+
+    .header-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: min(75vw, 320px);
+        background-color: #1a8f68;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 5rem 2rem 2rem;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 10;
+    }
+
+    .header-links.open {
+        transform: translateX(0);
+    }
 }

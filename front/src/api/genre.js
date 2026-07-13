@@ -11,6 +11,7 @@ export const fetchGenres = async () => {
 export const createGenre = async (genre) => {
     const response = await fetch(`${ENDPOINT}`, {
         method: "POST",
+        credentials: 'include',
         headers: {
             "Content-Type": "application/json"
         },
@@ -20,4 +21,16 @@ export const createGenre = async (genre) => {
     const data = await response.json();
 
     return data;
+}
+
+export const deleteGenre = async (id) => {
+    const response = await fetch(`${ENDPOINT}/${id}`, {
+        method: "DELETE",
+        credentials: 'include'
+    })
+
+    if (!response.ok) {
+        const data = await response.json();
+        throw data;
+    }
 }

@@ -5,20 +5,23 @@ import { Link } from 'react-router';
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [error, setError] = useState({});
     const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError({});
 
         if (!email || !password) {
-            setError('Veuillez remplir tous les champs');
+            setError({ global: 'Veuillez remplir tous les champs' });
             return;
         }
 
-        setError('');
+        const success = await login(email, password);
 
-        await login(email, password);
+        if (success === false) {
+            setError({ global: 'Email ou mot de passe incorrect' });
+        }
     };
 
     return (
@@ -45,14 +48,13 @@ export default function Login() {
                     />
                 </div>
 
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {error.global && <p className="form-error">{error.global}</p>}
 
                 <button className="form-submit">
                     Se connecter
                 </button>
 
                 <div style={{ marginTop: '10px', color: "white" }}>Pas encore inscrit ? <Link to="/register" style={{ color: '#007bff' }}>S'inscrire</Link></div>
-                <div style={{ marginTop: '10px', color: "white" }}>Mot de passe oublié ? <Link to="/forgot-password" style={{ color: '#007bff' }}>Réinitialiser le mot de passe</Link></div>
             </form>
         </div>
     )

@@ -19,6 +19,13 @@ import Register from './pages/Register'
 import Header from './layouts/Header'
 import Footer from './layouts/Footer'
 
+//import des dashboard admin
+import DashboardLayout from './layouts/DashboardLayout'
+import DashboardHome from './pages/dashboard/DashboardHome'
+import DashboardUsers from './pages/dashboard/DashboardUsers'
+import DashboardCategories from './pages/dashboard/DashboardCategories'
+import DashboardGenres from './pages/dashboard/DashboardGenres'
+
 // Protection des routes
 import Protected from './route/Protected'
 import PublicOnlyRoute from './route/PublicOnlyRoute'
@@ -46,7 +53,14 @@ function App() {
           <Route path='/edit/game/:id' element={<EditGame />} />
           <Route path='/edit/anime/:id' element={<EditAnime />} />
           <Route path='/favorites' element={<Favorites />} />
+          <Route path='/dashboard' element={<DashboardLayout />}>
+            <Route index element={<DashboardHome />} />
+            <Route path='users' element={<DashboardUsers />} />
+            <Route path='categories' element={<DashboardCategories />} />
+            <Route path='genres' element={<DashboardGenres />} />
+          </Route>
         </Route>
+
 
         {/* Routes accessible uniquement quand on est déconnecté */}
         <Route element={<PublicOnlyRoute />}>

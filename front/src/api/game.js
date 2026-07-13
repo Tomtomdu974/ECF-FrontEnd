@@ -34,8 +34,7 @@ export const fetchGameById = async (id) => {
 export const createGame = async (game) => {
     const response = await fetch(`${ENDPOINT}`, {
         method: "POST",
-        // Vu qu'on envois une image, un fichier, on envois pas en content-type application/json
-        // et on utilise pas JSON.stringify()
+        credentials: 'include',
         body: game
     })
 
@@ -51,6 +50,7 @@ export const createGame = async (game) => {
 export const updateGame = async (id, formData) => {
     const response = await fetch(`${ENDPOINT}/${id}`, {
         method: "PUT",
+        credentials: 'include',
         body: formData
     })
     const data = await response.json();
@@ -64,6 +64,7 @@ export const updateGame = async (id, formData) => {
 
 export const deleteGame = async (id) => {
     await fetch(`${ENDPOINT}/${id}`, {
-        method: "DELETE"
+        method: "DELETE",
+        credentials: 'include'
     })
 }

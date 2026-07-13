@@ -37,6 +37,7 @@ export const fetchMangaById = async (id) => {
 export const createManga = async (manga) => {
     const response = await fetch(`${ENDPOINT}`, {
         method: "POST",
+        credentials: 'include',
         body: manga
     })
 
@@ -52,6 +53,7 @@ export const createManga = async (manga) => {
 export const updateManga = async (id, formData) => {
     const response = await fetch(`${ENDPOINT}/${id}`, {
         method: "PUT",
+        credentials: 'include',
         body: formData
     })
     const data = await response.json();
@@ -65,6 +67,7 @@ export const updateManga = async (id, formData) => {
 
 export const deleteManga = async (id) => {
     await fetch(`${ENDPOINT}/${id}`, {
-        method: "DELETE"
+        method: "DELETE",
+        credentials: 'include'
     })
 }
