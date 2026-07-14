@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
+import { updateUser } from "../../api/user";
 import "../../styles/EditProfil.css";
 
 const EditProfil = () => {
-    const { user } = useAuth();
+    const { user, setUser } = useAuth();
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -27,15 +28,23 @@ const EditProfil = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const payload = { ...formData };
+
+        if (!payload.password) {
+            delete payload.password;
+        }
+
         try {
-            console.log(formData);
+            const updatedUser = await updateUser(user.id, payload);
+
+            // Met à jour les infos de l'utilisateur connecté
+            setUser(updatedUser);
 
             alert("Profil mis à jour avec succès !");
-
             navigate("/profil");
         } catch (error) {
             console.error(error);
-            alert("Une erreur est survenue.");
+            alert(error.message || "Une erreur est survenue.");
         }
     };
 
@@ -53,6 +62,7 @@ const EditProfil = () => {
                             name="firstName"
                             value={formData.firstName}
                             onChange={handleChange}
+                            required
                         />
                     </div>
 
@@ -63,6 +73,7 @@ const EditProfil = () => {
                             name="lastName"
                             value={formData.lastName}
                             onChange={handleChange}
+                            required
                         />
                     </div>
 
@@ -73,6 +84,7 @@ const EditProfil = () => {
                             name="userName"
                             value={formData.userName}
                             onChange={handleChange}
+                            required
                         />
                     </div>
 
@@ -83,6 +95,7 @@ const EditProfil = () => {
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
+                            required
                         />
                     </div>
 
@@ -91,7 +104,7 @@ const EditProfil = () => {
                         <input
                             type="password"
                             name="password"
-                            placeholder="Laisser vide pour ne pas modifier"
+                            placeholder="Laisser vide pour conserver le mot de passe actuel"
                             value={formData.password}
                             onChange={handleChange}
                         />
