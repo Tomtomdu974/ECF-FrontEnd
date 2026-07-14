@@ -1,0 +1,49 @@
+.profile-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.profile-actions button {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: .2s;
+}
+
+.profile-actions button:hover {
+    transform: translateY(-2px);
+}
+
+.save {
+    padding: 1rem;
+    margin-top: 1rem;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f7b801 0%, #f35b04 100%);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cancel {
+    padding: 1rem;
+    margin-top: 1rem;
+    border: none;
+    border-radius: 14px;
+    background: #6b7280;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}

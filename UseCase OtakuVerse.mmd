@@ -1,0 +1,32 @@
+---
+config:
+  theme: dark
+  layout: fixed
+---
+flowchart TB
+ subgraph System["Otaku Verse"]
+        Connection["Se connecter"]
+        Catalogue["Consulter le catalogue"]
+        Favoris["Gérer les favoris"]
+        GérerDesMangas["Gérer des mangas"]
+        GérerDesAnime["Gérer des anime"]
+        GérerDesJeuxVidéos["Gérer des jeux vidéos"]
+        Mangas["Détails du manga"]
+        Anime@{ label: "Détails de l'anime" }
+        JeuVidéo["Détails du jeu vidéo"]
+        Création["Créer compte"]
+        Modification["Ajouter / Modifier / Supprimer"]
+  end
+    Users["Users"] --- Catalogue & Gérer["Gérer son compte"]
+    Catalogue --- Mangas & Anime & JeuVidéo
+    Connection -. Include .- Création
+    Favoris -. Include .- Connection
+    Gérer --- Modifier["Modifier les infos"] & Supprimer["Supprimer son compte"]
+    GérerDesMangas --- Modification
+    GérerDesAnime --- Modification
+    GérerDesJeuxVidéos --- Modification
+    Admin["Admin"] --- GérerDesMangas & GérerDesAnime & GérerDesJeuxVidéos
+    Admin -. Gestion .-> Users
+    Users --- Favoris
+
+    Anime@{ shape: rect}

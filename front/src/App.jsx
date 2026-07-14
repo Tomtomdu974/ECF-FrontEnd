@@ -15,6 +15,8 @@ import EditAnime from './pages/Edit/EditAnime'
 import Favorites from './pages/Favorites'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Profils from './pages/Profils'
+import EditProfil from './pages/Edit/EditProfil'
 
 import Header from './layouts/Header'
 import Footer from './layouts/Footer'
@@ -53,6 +55,8 @@ function App() {
           <Route path='/edit/game/:id' element={<EditGame />} />
           <Route path='/edit/anime/:id' element={<EditAnime />} />
           <Route path='/favorites' element={<Favorites />} />
+          <Route path='/profil' element={<Profils />} />
+          <Route path='/editprofil' element={<EditProfil />} />
           <Route path='/dashboard' element={<DashboardLayout />}>
             <Route index element={<DashboardHome />} />
             <Route path='users' element={<DashboardUsers />} />

@@ -1,0 +1,84 @@
+.profile-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.profile-card {
+    width: 100%;
+    max-width: 700px;
+    background: #1f2937;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.profile-card h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ffffff;
+    font-size: 2rem;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #374151;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.info-row:hover {
+    background: #4b5563;
+}
+
+.info-row span {
+    font-weight: 600;
+    color: #9ca3af;
+}
+
+.info-row p {
+    margin: 0;
+    color: white;
+    font-weight: 500;
+}
+
+.edit-profil {
+    padding: 1rem;
+    margin-top: 1rem;
+    border: none;
+    border-radius: 14px;
+    text-align: center;
+    background: linear-gradient(135deg, #f7b801 0%, #f35b04 100%);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (max-width: 600px) {
+    .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .profile-card {
+        padding: 20px;
+    }
+
+    .profile-card h1 {
+        font-size: 1.7rem;
+    }
+}

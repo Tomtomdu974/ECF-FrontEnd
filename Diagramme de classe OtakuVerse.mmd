@@ -1,0 +1,82 @@
+classDiagram
+direction LR
+
+%% ========================
+%% CLASSES
+%% ========================
+
+class User{
+    -id : int
+    -lastName : string
+    -firstName : string
+    -userName : string
+    -email : string
+    -password : string
+    -roles : string[]
+
+    +login()
+    +logout()
+    +addFavorite()
+    +removeFavorite()
+}
+
+class Manga {
+    -id : int
+    -title : string
+    -author : string
+    -releaseYear : Date
+    -description : text
+    -image : string
+    -nbVolumes : int
+}
+
+class Anime {
+    -id : int
+    -title : string
+    -author : string
+    -releaseYear : Date
+    -description : text
+    -nbEpisodes : int
+    -image : string
+}
+
+class Game {
+    -id : int
+    -title : string
+    -author : string
+    -releaseYear : Date
+    -description : text
+    -image : string
+}
+
+class Category {
+    -id : int
+    -name : string
+}
+
+class Gender {
+    -id : int
+    -name : string
+}
+
+
+%% ========================
+%% RELATIONS
+%% ========================
+
+Anime "0..*" --> "1" Category : appartient à
+Manga "0..*" --> "1" Category : appartient à
+Game "0..*" --> "1" Category : appartient à
+Gender "1" --> "0..*" Anime : contient
+Gender "1" --> "0..*" Manga : contient
+Gender "1" --> "0..*" Game : contient
+User "0..*" -- "0..*" Anime : favoris
+User "0..*" -- "0..*" Manga : favoris
+User "0..*" -- "0..*" Game : favoris
+
+%% ========================
+%% NOTES
+%% ========================
+
+note for User "Un utilisateur peut ajouter autant de médias qu'il le souhaite à ses favoris."
+ 

@@ -124,6 +124,10 @@ class UserController {
         try {
             const { id } = req.params;
 
+            if (req.user.id === Number(req.params.id) && (req.body.role || req.method === 'DELETE')) {
+                return res.status(400).json({ message: "Vous ne pouvez pas modifier votre propre rôle ou supprimer votre propre compte via cette action" });
+            }
+
             // On extrait password et role du body pour les traiter à part
             const { password, role, ...bodyWithoutSensitiveFields } = req.body;
 
@@ -162,6 +166,10 @@ class UserController {
         try {
             const { id } = req.params;
             const user = await User.findByPk(id);
+
+            if (req.user.id === Number(req.params.id) && (req.body.role || req.method === 'DELETE')) {
+                return res.status(400).json({ message: "Vous ne pouvez pas modifier votre propre rôle ou supprimer votre propre compte via cette action" });
+            }
 
             if (!user) {
                 return res.status(404).json({ message: "Utilisateur non trouvé" });

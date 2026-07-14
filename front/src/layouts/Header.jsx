@@ -32,8 +32,8 @@ const Header = () => {
                     <Link to={'/catalogue'} onClick={closeMenu}>Catalogue</Link>
 
                     {user && <Link to={'/favorites'} onClick={closeMenu}>Favoris ({favorites.length})</Link>}
-                    {user && <p>{user.userName}</p>}
-                    {user?.role === 'admin' && <Link to={'/admin'} onClick={closeMenu}>Espace admin</Link>}
+                    {user && <Link to={'/profil'}><p>{user.userName}</p></Link>}
+                    {user?.role === 'admin' && <Link to={'/dashboard'} onClick={closeMenu}>Espace admin</Link>}
                     {user && <button onClick={() => { logout(); closeMenu(); }}>Se déconnecter</button>}
 
                     {!user && <Link to={'/login'} onClick={closeMenu}>Connexion</Link>}
