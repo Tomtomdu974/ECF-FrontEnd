@@ -18,7 +18,7 @@ const AnimeDetail = () => {
 
     useEffect(() => {
         fetchAnimeById(id).then(data => setAnime(data));
-    }, []);
+    }, [id]);
 
     return (
         <main className="detail-page">
@@ -46,7 +46,7 @@ const AnimeDetail = () => {
                         </Link>}
 
                         {user && <button className="detail-btn favorite-btn" onClick={() => toggleFavorite({ ...anime, type: "anime" })}>
-                            {isFavorite(anime.id, "anime") ? "Retirer des favoris" : "Ajouter au favoris"}
+                            {isFavorite(anime.id, "anime") ? "Retirer des favoris" : "Ajouter aux favoris"}
                         </button>}
 
                         {anime.title && <Link to={`${CRUNCHYROLL_URL}${encodeURIComponent(anime.title)}`} target="_blank" rel="noopener noreferrer" className="detail-btn edit-btn">

@@ -19,7 +19,7 @@ const GameDetail = () => {
 
     useEffect(() => {
         fetchGameById(id).then(data => setGame(data));
-    }, []);
+    }, [id]);
 
     return (
         <main className="detail-page">
@@ -47,7 +47,7 @@ const GameDetail = () => {
                         </Link>}
 
                         {user && <button className="detail-btn favorite-btn" onClick={() => toggleFavorite({ ...game, type: "game" })}>
-                            {isFavorite(game.id, "game") ? "Retirer des favoris" : "Ajouter au favoris"}
+                            {isFavorite(game.id, "game") ? "Retirer des favoris" : "Ajouter aux favoris"}
                         </button>}
 
                         {game.title && <Link to={`${INSTANT_GAMING_URL}${encodeURIComponent(game.title)}`} target="_blank" rel="noopener noreferrer" className="detail-btn edit-btn">

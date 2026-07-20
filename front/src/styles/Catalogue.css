@@ -5,7 +5,7 @@
     border-radius: 24px;
     margin-bottom: 3rem;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
@@ -45,7 +45,7 @@
 }
 
 .gender-filters select {
-    margin : 0.5rem;
+    margin: 0.5rem;
     padding: 0.5rem 1rem;
     border-radius: 10px;
     border: none;
@@ -57,14 +57,14 @@
 
 .sort-filters {
     display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: #fff;
-        font-size: 1.3rem;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff;
+    font-size: 1.3rem;
 }
 
 .sort-filters select {
-    margin : 0.5rem;
+    margin: 0.5rem;
     padding: 0.5rem 1rem;
     border-radius: 10px;
     border: none;
@@ -102,4 +102,88 @@
     background: #fff;
     color: #d62828;
     border-color: #fff;
+}
+
+@media (max-width: 768px) {
+    .catalogue-header {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        margin-inline: 0;
+        padding: 0 0.75rem 1.5rem;
+        border-radius: 18px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .catalogue-header h1 {
+        margin-bottom: 1.25rem;
+    }
+
+    .filters {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .catalogue-search-form,
+    .catalogue-search-form label {
+        display: block;
+        width: 100%;
+    }
+
+    .catalogue-search-form input {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .gender-filters,
+    .sort-filters {
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    .gender-filters label,
+    .sort-filters label {
+        display: grid;
+        grid-template-columns: 5.5rem minmax(0, 1fr);
+        align-items: center;
+        width: 100%;
+        text-align: left;
+    }
+
+    .gender-filters select,
+    .sort-filters select {
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .category-filters {
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    .category-filters button {
+        padding: 0.55rem 1rem;
+    }
+}
+
+@media (max-width: 800px) {
+    .catalogue-header {
+        padding-inline: 0.6rem;
+    }
+
+    .catalogue-header h1 {
+        font-size: 2rem;
+    }
+
+    .gender-filters label,
+    .sort-filters label {
+        grid-template-columns: 4.75rem minmax(0, 1fr);
+    }
 }

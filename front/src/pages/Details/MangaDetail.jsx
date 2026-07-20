@@ -19,7 +19,7 @@ const MangaDetail = () => {
 
     useEffect(() => {
         fetchMangaById(id).then(data => setManga(data));
-    }, []);
+    }, [id]);
 
     return (
         <main className="detail-page">
@@ -47,7 +47,7 @@ const MangaDetail = () => {
                         </Link>}
 
                         {user && <button className="detail-btn favorite-btn" onClick={() => toggleFavorite({ ...manga, type: "manga" })}>
-                            {isFavorite(manga.id, "manga") ? "Retirer des favoris" : "Ajouter au favoris"}
+                            {isFavorite(manga.id, "manga") ? "Retirer des favoris" : "Ajouter aux favoris"}
                         </button>}
 
                         {manga.title && <Link to={`${SCAN_URL}${slugify(manga.title)}`} target="_blank" rel="noopener noreferrer" className="detail-btn edit-btn">Lire le manga</Link>}

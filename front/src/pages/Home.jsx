@@ -69,7 +69,7 @@ const Home = () => {
                                     <footer className="media-card__actions">
                                         {user?.role ==='admin'&& <Link to={`/edit/manga/${manga.id}`}>Modifier</Link>}
                                         {user && <button onClick={() => toggleFavorite({ ...manga, type: "manga" })}>
-                                            {isFavorite(manga.id, "manga") ? "Retirer des favoris" : "Ajouter au favoris"}
+                                            {isFavorite(manga.id, "manga") ? "Retirer des favoris" : "Ajouter aux favoris"}
                                         </button>}
                                     </footer>
                                 </article>
@@ -103,7 +103,7 @@ const Home = () => {
                                     <footer className="media-card__actions">
                                         {user?.role === 'admin' && <Link to={`/edit/anime/${anime.id}`}>Modifier</Link>}
                                         {user && <button onClick={() => toggleFavorite({ ...anime, type: "anime" })}>
-                                            {isFavorite(anime.id, "anime") ? "Retirer des favoris" : "Ajouter au favoris"}
+                                            {isFavorite(anime.id, "anime") ? "Retirer des favoris" : "Ajouter aux favoris"}
                                         </button>}
                                     </footer>
                                 </article>
@@ -137,7 +137,7 @@ const Home = () => {
                                     <footer className="media-card__actions">
                                         {user?.role === 'admin' && <Link to={`/edit/game/${game.id}`}>Modifier</Link>}
                                         {user && <button onClick={() => toggleFavorite({ ...game, type: "game" })}>
-                                            {isFavorite(game.id, "game") ? "Retirer des favoris" : "Ajouter au favoris"}
+                                            {isFavorite(game.id, "game") ? "Retirer des favoris" : "Ajouter aux favoris"}
                                         </button>}
                                     </footer>
                                 </article>
