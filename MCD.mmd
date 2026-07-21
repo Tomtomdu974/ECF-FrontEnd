@@ -1,0 +1,51 @@
+flowchart LR
+
+    U["UTILISATEUR<br/>Prénom<br/>Nom<br/>Nom utilisateur<br/>Email<br/>Mot de passe<br/>Rôle"]
+
+    M["MANGA<br/>Titre<br/>Date de sortie<br/>Auteur<br/>Description<br/>Nombre de volumes<br/>Image"]
+
+    A["ANIME<br/>Titre<br/>Date de sortie<br/>Auteur<br/>Description<br/>Nombre d'épisodes<br/>Image"]
+
+    J["JEU VID<br/>Titre<br/>Date de sortie<br/>Auteur<br/>Description<br/>Image"]
+
+    C["CATÉGORIE<br/>Nom"]
+    G["GENRE<br/>Nom"]
+
+    FM([FAVORIS MANGA])
+    FA([FAVORIS ANIME])
+    FJ([FAVORIS JEU VIDÉO])
+
+    CM([CLASSER MANGA])
+    CA([CLASSER ANIME])
+    CJ([CLASSER JEU VIDÉO])
+
+    GM([CARACTÉRISER MANGA])
+    GA([CARACTÉRISER ANIME])
+    GJ([CARACTÉRISER JEU VIDÉO])
+
+    U ---|"0,N"| FM
+    FM ---|"0,N"| M
+
+    U ---|"0,N"| FA
+    FA ---|"0,N"| A
+
+    U ---|"0,N"| FJ
+    FJ ---|"0,N"| J
+
+    C ---|"0,N"| CM
+    CM ---|"1,1"| M
+
+    C ---|"0,N"| CA
+    CA ---|"1,1"| A
+
+    C ---|"0,N"| CJ
+    CJ ---|"1,1"| J
+
+    G ---|"0,N"| GM
+    GM ---|"1,1"| M
+
+    G ---|"0,N"| GA
+    GA ---|"1,1"| A
+
+    G ---|"0,N"| GJ
+    GJ ---|"1,1"| J
