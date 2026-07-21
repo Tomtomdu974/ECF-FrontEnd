@@ -86,7 +86,7 @@ const Register = () => {
 
                 <button type="submit" className="form-submit">S'inscrire</button>
 
-                <div style={{ marginTop: '10px' }}>Déjà inscrit ? <Link to="/login">Se connecter</Link></div>
+                <div style={{ marginTop: '10px', color: "white" }}>Déjà inscrit ? <Link to="/login" style={{ color: '#007bff' }}>Se connecter</Link></div>
             </form>
         </div>
     );
